@@ -1,208 +1,116 @@
-#include <iostream>
-#include <string>
 
-#define PASSWORD "struct"
+int option2 = 0;
 
-using namespace std;
-
-struct address
+do
 {
-    string settlement, municipality, departament;
-    int houseNumber;
-};
+    cout << "\n***Elija su orden***" << endl;
+    cout << "\n1. Plato Principal";
+    cout << "\n2. Entraditas";
+    cout << "\n3. Bebidas";
+    cout << "\n4. Salir";
+    cout << "\nOpcion: ";
+    cin >> option2;
+    cin.ignore;
 
-enum mainDish
-{
-    pizza,
-    pasta,
-    lasgna
-};
-enum drink
-{
-    beer,
-    soda,
-    tea
-};
-enum starter
-{
-    GarlickBread,
-    pizzaRolls,
-    cheeseSticks
-};
-enum paymentType
-{
-    cash,
-    card
-};
-
-struct mainInfo
-{
-    string name;
-    mainDish pDish;
-    drink pDrink;
-    starter pStarter;
-    paymentType pay;
-    //plato principal
-    //entrada
-    //bebdida
-    //tipo de pago
-
-    int idOrder;
-    float total;
-};
-
-struct delivery
-{
-    address deliveryAddress;
-    int cellPhone;
-    mainInfo deliveryInfo;
-};
-
-struct houseOrder
-{
-    int pTable;
-    mainInfo houseInfo;
-};
-
-bool isAdmin = false;
-int idOrder;
-bool loginUser(void);
-
-int main(void)
-{
-    delivery* dArray = NULL;
-    houseOrder* dArray = NULL;
-    int option = 0;
-    if (loginUser())
-        return 0;
-
-        do{
-            printMenu(); cin >> option;
-            cin.ignore();
-        }
-
-    return 0;
-}
-
-bool loginUser(void)
-{
-    string enterPass = " ";
-    char option;
-    cout << " Inicio de sesión " << endl;
-    cout << " A - Administrador " << endl;
-    cout << " E - Empleado " << endl;
-    cout << " Su opcion: \t";
-    cin >> option;
-
-    switch (option)
+    switch (option2)
     {
-    case 'a':
-    case 'A':
-        cout << " Digite la contraseña: ";
-        cin >> enterPass;
-        if (enterPass.compare(PASSWORD) == 0)
-        {
-            isAdmin = true;
-            return true;
-        }
-        else
-        {
-            cout << " Contraseña incorrecta" << endl;
-        }
+    case 1:
+        cout << "\n---------------------" << endl;
+        cout << "***Plato Principal***" << endl;
+        cout << "---------------------" << endl;
+     
+     do
+	{
+		cout << "1. Pizza\n2. Pasta\n3. Lasagna\n4. Salir";
+        cout << "\nOpcion: ";
+		cin >> option;
 
+		switch (option)
+		{
+		case 1:
+			cout << "¿Cuantas pizzas desea ordenar?: ";
+			cin >> aux1.pizza;
+			break;
+		case 2:
+			cout << "¿Cuantas pastas desea ordenar?: ";
+			cin >> aux1.pasta;
+			break;
+		case 3:
+			cout << "¿Cuantas lasagnas desea ordenar?: ";
+			cin >> aux1.lasagna;
+			break;
+		default: 
+            cout << "¡¡¡Dato erróneo!!!, intente de nuevo" << endl;
+            break;
+		}
+	} while (option != 4);
         break;
 
-    case 'e':
-    case 'E':
-        isAdmin = false;
-        return true;
+    case 2:
+        cout << "\n----------------" << endl;
+    cout << "***Entraditas***" << endl;
+    cout << "----------------" << endl;
+
+     do
+	{
+		cout << "1. Cheese Sticks\n2. Pan con ajo\n 3. Pizza Rolls\n 4. Salir";
+		cin >> option;
+
+		switch (option)
+		{
+		case 1:
+			cout << "¿Cuantas ordenes de cheese sticks desea ordenar?: ";
+			cin >> aux2.cheeseSticks;
+			break;
+		case 2:
+			cout << "¿Cuantas ordenes de pan con ajo desea ordenar?: ";
+			cin >> aux2.garlicBread;
+			break;
+		case 3:
+			cout << "¿Cuantas ordenas de pizza rolls desea ordenar?: ";
+			cin >> aux2.pizzaRolls;
+			break;
+		default: 
+            cout << "¡¡¡Dato erróneo!!!, intente de nuevo" << endl;
+            break;
+		}
+	} while (option != 4);
+        break;
+    case 3:
+    cout << "\n-------------" << endl;
+    cout << "***Bebidas***" << endl;
+    cout << "-------------" << endl;
+   
+    do
+	{
+		cout << "1. Cervezas\n2. Sodas\n 3. Té helado\n 4. Salir";
+		cin >> option;
+
+		switch (option)
+		{
+		case 1:
+			cout << "¿Cuantas cervezas desea ordenar?: ";
+			cin >> aux3.beer;
+			break;
+		case 2:
+			cout << "¿Cuantas sodas desea ordenar?: ";
+			cin >> aux3.soda;
+			break;
+		case 3:
+			cout << "¿Cuantos té helado desea ordenar?: ";
+			cin >> aux3.iceTea;
+			break;
+		default: 
+            cout << "¡¡¡Dato erróneo!!!, intente de nuevo" << endl;
+            break;
+		}
+	} while (option != 4);
+        break;
+
+    default:
+        cout << "¡¡¡Dato erróneo!!!, intente de nuevo" << endl;
         break;
     }
-    return false;
-}
+} while (option2 != 4)
 
-void printMenu(void){
-    cout << " SISTEMA DE DESPACHO PIZZERIA XXXXXXXXXXXXX " << endl;
-    cout << " 1. Agregar ordenes a domicilio " << endl;
-    cout << " 2. Agregar ordenes en restaurante " << endl;
-    cout << " 3. Ver ordenes a domicilio " << endl;
-    cout << " 4. ver ordenes en restaurante " << endl;
-    cout << " Su opcion:\t";
- 
-
-}
-
-void adOrder(delivery* array){
-    int size = 0;
-    cout << " Cantidad de pedidos a ingresar: "; cin >> size;
-    cin.ignore();
-
-    array = new delivery[size];
-
-    for(int i = 0; i < size; i++){
-        cout << "Nombre:\t";getline(cin, array[i].deliveryInfo.name);
-        cout << " Dirección: " << endl;
-        cout << "Colonia:\t";getline(cin, array[i].deliveryAddress.settlement);
-         cout << "Municipio:\t";getline(cin, array[i].deliveryAddress.municipality);
-          cout << "Departamento:\t";getline(cin, array[i].deliveryAddress.departament);
-           cout << "No. Casa:\t"; cin >> array[i].deliveryAddress.houseNumber;
-           cin.ignore();
-
-           cout << "Plato principal" << endl;
-           cout << " 1. Pizza" << endl;
-           cout << " 2. Pasta" << endl;
-           cout << " 3. Lasgna" << endl;
-           cout << " 1. Pizza" << endl;
-           cout << " Su opcion:\t"; cin >> aux;
-
-           if(aux == 1)
-           array[1].deliveryInfo.pDish = pizza;
-           else if( aux == 2)
-           array[i].deliveryInfo.pDish = pasta;
-           else
-           array[i].deliveryInfo.pDish = lasgna;
-
-           array[i].deliveryInfo.p.Dish;
-
-
-            cout << "monto: ";cin >> array[i].deliveryInfo.total;
-            cin.ignore();
-            cout << "Telefono: "; cin >> array[i].cellPhone;
-            cin.ignore();
-
-
-
-
-
-    }
-}
-
-void addOrder(houseOrder* array){
-
-}
-
-void searchByName(delivery* array, int size){
-    bool userExists = false;
-    string aux = " ";
-    cout << "Nombre a buscar: "; getline(cin, aux);
-
-    for(int i = 0; i < size; i++){
-        if(aux.compare(array[i].deliveryInfo.name) == 0){
-            userExists = true;
-        }
-    }
-    (userExists) ? cout << "NOexiste el usuario" : cout << " ";
-}
-
-void searchByName(houseOrder* array, int size){
-    bool userExists = false;
-    string aux = " ";
-    cout << "Nombre a buscar: "; getline(cin, aux);
-
-    for(int i = 0; i < size; i++){
-        if(aux.compare(array[i].houseInfo.name) == 0){
-            userExists = true;
-        }
-    }
-    (userExists) ? cout << "NOexiste el usuario" : cout << " ";
-}
+    

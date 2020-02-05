@@ -1,50 +1,113 @@
 #include <iostream>
 #include <string>
-
+#include <queue>
 using namespace std;
 
-struct Pizzeria
+string contrasena = "struct";
+
+queue<string> unaCola;
+
+void listDom()
 {
-    string nombre;
-    string pedido;
-    string entrada;
-    string direccion;
-    int telefono;
-};
+    for (int i = 0; i <= unaCola.size(); i++)
+    {
+        cout << "Nombre del cliente: " << unaCola.front() << endl;
+        unaCola.pop();
+    }
+}
 
+int entregaDomicilio()
+{
+    string name, direction;
+    int phone;
 
-float promedio(){
+    cout << "Ingrese el nombre del cliente: ";
+    getline(cin, direction);
+    unaCola.push(name);
+}
 
+void menuEmpleado()
+{
+    char option;
 
-};
+    do
+    {
+        cout << "Menu" << endl;
+        cout << "\ta) Agregar pedido a domicilio\n\tb) Agregar encargo a restaurante\n\tc) Ver pedidos a domicilio\n\td) Ver encargos en el restaurante\n\te) Salir";
+        cout << "\nSu opcion: ";
+        cin >> option;
+
+        switch (option)
+        {
+        case 'a':
+            entregaDomicilio();
+            break;
+        case 'c':
+            listDom();
+            break;
+        }
+        cout << endl;
+    } while (option != 'e');
+}
+
+void menuAdmin()
+{
+    char option;
+
+    do
+    {
+        cout << "Menu" << endl;
+        cout << "\ta) Agregar pedido a domicilio\n\tb) Agregar encargo a restaurante\n\tc) Ver pedidos a domicilio\n\td) Ver encargos en el restaurante\n\te) Ver total de venta\n\tf) Borrar ordenes\n\tg) Salir ";
+        cout << "\n\tSu opcion: ";
+        cin >> option;
+
+        switch (option)
+        {
+        case 'a':
+            entregaDomicilio();
+            break;
+        case 'c':
+            listDom();
+            break;
+        }
+        cout << endl;
+    } while (option != 'g');
+}
 
 int main()
 {
-    struct Pizzeria domicilio;
+    string clave;
+    char opcion;
 
-    cout << "Digite su nombre: ";
-    cin >> domicilio.nombre;
-    cin.ignore();
-    getline (cin, domicilio.nombre);
+    do
+    {
 
-    cout << "Digite su pedido entre las opciones pizza, ensalada o pasta: ";
-    cin >> domicilio.pedido;
-    cin.ignore();
-    getline (cin, domicilio.pedido);
+        cout << "Selecciones su cargo: " << endl;
+        cout << "\ta) Empleado\n\tb) Administrador";
+        cout << "\n\tSu opcion: ";
+        cin >> opcion;
 
-    cout << "Digite su entrada entre Alitas o una orden de nachos: ";
-    cin >> domicilio.entrada;
-    cin.ignore();
-    getline (cin, domicilio.entrada);
+        switch (opcion)
+        {
 
-    cout << "Digite la dirección de su domicilio: ";
-    cin >> domicilio.direccion;
-    cin.ignore();
-    getline (cin, domicilio.direccion);
+        case 'a':
+            menuEmpleado();
+            break;
 
-    cout << "Digite su número de telefono: ";
-    cin >> domicilio.telefono;
-    cin.ignore();
-    
+        case 'b':
+            do
+            {
+                cout << "Ingrese la contraseña: ";
+                cin >> clave;
+                if (clave == contrasena)
+                {
+                    menuAdmin();
+                }
+            } while (clave != contrasena);
+
+            break;
+        }
+    } while (opcion != 'c');
+
     return 0;
 }
