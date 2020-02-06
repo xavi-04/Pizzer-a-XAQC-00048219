@@ -128,7 +128,7 @@ char EmployeMenu(char aux)
     do
     {
         cout << endl;
-        cout << "Menu" << endl;
+        cout << "Menú Principal" << endl;
         cout << "\t1) Agregar orden a domicilio\n";
         cout << "\t2) Agregar orden a restaurante\n";
         cout << "\t3) Ver ordenes a domicilio\n";
@@ -140,7 +140,7 @@ char EmployeMenu(char aux)
         cout << "\t9) Calcular total de ventas\n";
         cout << "\t10) Cambiar de usuario\n";
         cout << "\t11) Salir\n";
-        cout << "Su opcion: ";
+        cout << "\tSu opcion: ";
         cin >> option;
 
         switch (option)
@@ -192,7 +192,7 @@ char AdminMenu(char aux)
     do
     {
         cout << endl;
-        cout << "Menu" << endl;
+        cout << "Menú Principal" << endl;
         cout << "\t1) Agregar orden a domicilio\n";
         cout << "\t2) Agregar orden a restaurante\n";
         cout << "\t3) Ver ordenes a domicilio\n";
@@ -205,7 +205,7 @@ char AdminMenu(char aux)
         cout << "\t10) Calcular total de ventas\n";
         cout << "\t11) Cambiar de usuario\n";
         cout << "\t12) Salir\n";
-        cout << "Su opcion: ";
+        cout << "\tSu opcion: ";
         cin >> option;
 
         switch (option)
@@ -671,7 +671,7 @@ void WatchDelivery(Delivery aux)
     {
         cout << "Té helado: " << aux.drinksP.iceTea << endl;
     }
-    cout << "Monto total: $" << monto << " dólares" << endl;
+    cout << "\nMonto total: $" << monto << " dólares" << endl;
 
     cout << "Tipo de pago: ";
     switch (aux.pay)
@@ -683,7 +683,6 @@ void WatchDelivery(Delivery aux)
         cout << "Tarjeta de crédito" << endl;
         break;
     }
-    cout << "-------------------------------";
 }
 
 void WatchDeliveryOrders()
@@ -698,11 +697,11 @@ void WatchRestaurant(pRestaurant aux)
 {
     cout << endl;
     cout << "-------------------------------";
-    cout << "---Datos del cliente---";
+    cout << "\n---Datos del cliente---";
     cout << "\nNúmero de orden: #" << orderNumber;
     cout << "\nNombre del cliente: " << aux.reserva;
-    cout << "Personas por mesa: " << PerTable << endl;
-    cout << "\n---Orden del cliente---\n";
+    cout << "\nPersonas por mesa: " << PerTable << endl;
+    cout << "---Orden del cliente---\n";
     if (aux.dishQ.pizza != 0)
     {
         cout << "Pizza: " << aux.dishQ.pizza << endl;
@@ -750,7 +749,6 @@ void WatchRestaurant(pRestaurant aux)
         cout << "Tarjeta de crédito" << endl;
         break;
     }
-    cout << "-------------------------------" << endl;
     
 }
 
@@ -772,9 +770,11 @@ void ServeRestaurantsOrders()
 
 void WaitTime(vector<Delivery> orders) //sobrecarga
 {
+
 }
 void WaitTime(vector<pRestaurant> restaurantP) //sobrecarga
 {
+    
 }
 
 void CancelOrder()

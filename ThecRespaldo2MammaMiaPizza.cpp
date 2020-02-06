@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cmath>
 #include <vector>
 using namespace std;
 
@@ -51,6 +52,7 @@ struct restaurant{
     Drinks drinksQ;
     Starter starterQ;
     paymentType payQ;
+    float timeQ; 
 };
 typedef struct restaurant pRestaurant;
 
@@ -63,11 +65,16 @@ struct delivery
     Drinks drinksP;
     Starter starterP;
     paymentType pay;
+    vector<mainDish> dishT;
+    vector<drinks> drinksT;
+    vector<starter> starterT;
+    float timeP;
 };
 typedef struct delivery Delivery;
 
 vector<Delivery> orders;
 vector<pRestaurant> restaurantP;
+
 
 char EmployeMenu(char aux);
 char AdminMenu(char aux);
@@ -128,7 +135,7 @@ char EmployeMenu(char aux)
     do
     {
         cout << endl;
-        cout << "Menu" << endl;
+        cout << "Menú Principal" << endl;
         cout << "\t1) Agregar orden a domicilio\n";
         cout << "\t2) Agregar orden a restaurante\n";
         cout << "\t3) Ver ordenes a domicilio\n";
@@ -140,7 +147,7 @@ char EmployeMenu(char aux)
         cout << "\t9) Calcular total de ventas\n";
         cout << "\t10) Cambiar de usuario\n";
         cout << "\t11) Salir\n";
-        cout << "Su opcion: ";
+        cout << "\tSu opcion: ";
         cin >> option;
 
         switch (option)
@@ -163,10 +170,11 @@ char EmployeMenu(char aux)
             //ServeRestaurantsOrders();
             break;
         case 7:
-            //WaitTimeDeliveryOrders();
+            WaitTime(vector<Delivery> orders);
+
             break;
         case 8:
-            //WaitTimeRestaurantsOrders();
+            WaitTime(vector<pRestaurant> restaurantP);
             break;
         case 9:
             //CalculateTotalSales();
@@ -192,7 +200,7 @@ char AdminMenu(char aux)
     do
     {
         cout << endl;
-        cout << "Menu" << endl;
+        cout << "Menú Principal" << endl;
         cout << "\t1) Agregar orden a domicilio\n";
         cout << "\t2) Agregar orden a restaurante\n";
         cout << "\t3) Ver ordenes a domicilio\n";
@@ -205,7 +213,7 @@ char AdminMenu(char aux)
         cout << "\t10) Calcular total de ventas\n";
         cout << "\t11) Cambiar de usuario\n";
         cout << "\t12) Salir\n";
-        cout << "Su opcion: ";
+        cout << "\tSu opcion: ";
         cin >> option;
 
         switch (option)
@@ -228,10 +236,11 @@ char AdminMenu(char aux)
             //ServeRestaurantsOrders();
             break;
         case 7:
-            //WaitTimeDeliveryOrders();
+            WaitTime(vector<Delivery> orders);
             break;
         case 8:
-            //WaitTimeRestaurantsOrders();
+             
+             WaitTime();
             break;
         case 9:
             //CancelOrder();
@@ -441,7 +450,13 @@ void DeliveryOrders()
     cout << "\nOpcion: ";
     cin >> option3;
     cin.ignore();
+
+    aux.timeP = ((aux.dishP.pasta * 1.5, aux.dishP.pizza * 1.5, aux.dishP.lasagna * 1.5) + (aux.starterP.cheeseSticks * 1.10, aux.starterP.garlicBread * 1.10, aux.starterP.pizzaRolls * 1.10) + (aux.drinksP.beer * 1.35, aux.drinksP.soda * 1.35, aux.drinksP.iceTea * 1.35) + 15);
+    cout << "El tiempo de espera de la orden del cliente es: " << aux.timeP << "minutos" << endl; 
+
     orders.push_back(aux);
+    cout << endl;
+
 }
 
 void RestaurantOrders()
@@ -621,6 +636,12 @@ void RestaurantOrders()
             cout << "Máximo 5 personas por mesa" << endl;
         }
     } while (continuar);
+
+    aux.timeQ = ((aux.dishQ.pasta * 1.5, aux.dishQ.pizza * 1.5, aux.dishQ.lasagna * 1.5) + (aux.starterQ.cheeseSticks * 1.10, aux.starterQ.garlicBread * 1.10, aux.starterQ.pizzaRolls * 1.10) + (aux.drinksQ.beer * 1.35, aux.drinksQ.soda * 1.35, aux.drinksQ.iceTea * 1.35) + 15);
+    cout << "El tiempo de espera de la orden del cliente es: " << aux.timeQ << "minutos" << endl; 
+
+    restaurantP.push_back(aux);
+    cout << endl;
 }
 
 void WatchDelivery(Delivery aux)
@@ -671,7 +692,7 @@ void WatchDelivery(Delivery aux)
     {
         cout << "Té helado: " << aux.drinksP.iceTea << endl;
     }
-    cout << "Monto total: $" << monto << " dólares" << endl;
+    cout << "\nMonto total: $" << monto << " dólares" << endl;
 
     cout << "Tipo de pago: ";
     switch (aux.pay)
@@ -683,7 +704,6 @@ void WatchDelivery(Delivery aux)
         cout << "Tarjeta de crédito" << endl;
         break;
     }
-    cout << "-------------------------------";
 }
 
 void WatchDeliveryOrders()
@@ -698,11 +718,11 @@ void WatchRestaurant(pRestaurant aux)
 {
     cout << endl;
     cout << "-------------------------------";
-    cout << "---Datos del cliente---";
+    cout << "\n---Datos del cliente---";
     cout << "\nNúmero de orden: #" << orderNumber;
     cout << "\nNombre del cliente: " << aux.reserva;
-    cout << "Personas por mesa: " << PerTable << endl;
-    cout << "\n---Orden del cliente---\n";
+    cout << "\nPersonas por mesa: " << PerTable << endl;
+    cout << "---Orden del cliente---\n";
     if (aux.dishQ.pizza != 0)
     {
         cout << "Pizza: " << aux.dishQ.pizza << endl;
@@ -739,7 +759,7 @@ void WatchRestaurant(pRestaurant aux)
     {
         cout << "Té helado: " << aux.drinksQ.iceTea << endl;
     }
-    cout << "Monto total: $" << monto << " dólares" << endl;
+    cout << "\nMonto total: $" << monto << " dólares" << endl;
     cout << "Tipo de pago: ";
     switch (aux.payQ)
     {
@@ -750,7 +770,6 @@ void WatchRestaurant(pRestaurant aux)
         cout << "Tarjeta de crédito" << endl;
         break;
     }
-    cout << "-------------------------------" << endl;
     
 }
 
@@ -772,9 +791,25 @@ void ServeRestaurantsOrders()
 
 void WaitTime(vector<Delivery> orders) //sobrecarga
 {
+    float sum = 0;
+    Delivery aux;
+
+    for(Delivery aux : orders){
+     sum += ((aux.dishP.pasta * 1.5, aux.dishP.pizza * 1.5, aux.dishP.lasagna * 1.5) + (aux.starterP.cheeseSticks * 1.10, aux.starterP.garlicBread * 1.10, aux.starterP.pizzaRolls * 1.10) + (aux.drinksP.beer * 1.35, aux.drinksP.soda * 1.35, aux.drinksP.iceTea * 1.35) + 15);
+    }
+    cout << "El tiempo total de espera de las ordenes es: " << sum << "minutos" << endl; 
+
 }
+
 void WaitTime(vector<pRestaurant> restaurantP) //sobrecarga
 {
+   float sum = 0;
+   pRestaurant aux;
+
+    for(pRestaurant aux : restaurantP){
+     sum += ((aux.dishQ.pasta * 1.5, aux.dishQ.pizza * 1.5, aux.dishQ.lasagna * 1.5) + (aux.starterQ.cheeseSticks * 1.10, aux.starterQ.garlicBread * 1.10, aux.starterQ.pizzaRolls * 1.10) + (aux.drinksQ.beer * 1.35, aux.drinksQ.soda * 1.35, aux.drinksQ.iceTea * 1.35) + 15);
+    }
+    cout << "El tiempo total de espera de las ordenes es: " << sum << "minutos" << endl; 
 }
 
 void CancelOrder()
