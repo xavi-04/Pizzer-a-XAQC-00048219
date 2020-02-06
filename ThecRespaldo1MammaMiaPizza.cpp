@@ -46,9 +46,13 @@ struct starter
 typedef struct starter Starter;
 
 struct restaurant{
-    string reservaCliente;
+    string reserva;    
+    mainDishP dishQ;
+    Drinks drinksQ;
+    Starter starterQ;
+    paymentType payQ;
 };
-typedef struct resturant restaurantP;
+typedef struct restaurant pRestaurant;
 
 struct delivery
 {
@@ -62,11 +66,8 @@ struct delivery
 };
 typedef struct delivery Delivery;
 
-
-
 vector<Delivery> orders;
-vector<restaurantP> pRestaurant;
-
+vector<pRestaurant> restaurantP;
 
 char EmployeMenu(char aux);
 char AdminMenu(char aux);
@@ -78,8 +79,8 @@ void WatchRestaurantOrders();
 void WatchRestaurant();
 void ServeDeliveryOrders();
 void ServeRestaurantsOrders();
-void WaitTimeDeliveryOrders();
-void WaitTimeRestaurantsOrders();
+void WaitTime(vector<Delivery> orders);
+void WaitTime(vector<pRestaurant> restaurantP);
 void CancelOrder();
 void CalculateTotalSales();
 
@@ -260,9 +261,7 @@ void DeliveryOrders()
     Delivery aux;
     bool continuar = true;
     orderNumber = orderNumber + 1;
-
     int option = 0, option2 = 0, option3 = 0;
-    Delivery p;
     float pizza = 13.99, pasta = 5.55, lasagna = 6.25, beer = 1.99, soda = 0.95, iceTea = 1.15, pizzaRolls = 4.99, cheeseSticks = 3.75, garlicBread = 3.99;
     cout << "\nNúmero de orden #" << orderNumber << endl;
     cout << "Ingrese el nombre del cliente : ";
@@ -270,28 +269,26 @@ void DeliveryOrders()
     getline(cin, aux.FullName);
 
     cout << "Ingrese un telefono: ";
-    cin.ignore();
     cin >> aux.CellPhone;
+    cin.ignore();
 
     cout << "\n----------------------------" << endl;
     cout << "***Dirección del cliente***" << endl;
     cout << "----------------------------" << endl;
 
     cout << "\nDepartamento: ";
-    cin.ignore();
     getline(cin, aux.deliveryAddress.department);
 
     cout << "Municipio: ";
-    cin.ignore();
     getline(cin, aux.deliveryAddress.municipality);
 
     cout << "Colonia: ";
-    cin.ignore();
+
     getline(cin, aux.deliveryAddress.settlement);
 
     cout << "No. de casa: ";
-    cin.ignore();
     cin >> aux.deliveryAddress.houseNumber;
+    cin.ignore();
     cout << endl;
 
     do
@@ -325,18 +322,18 @@ void DeliveryOrders()
                 {
                 case 1:
                     cout << "\n¿Cuantas pizzas desea ordenar?: ";
-                    cin >> p.dishP.pizza;
-                    monto = monto + (pizza * p.dishP.pizza);
+                    cin >> aux.dishP.pizza;
+                    monto = monto + (pizza * aux.dishP.pizza);
                     break;
                 case 2:
                     cout << "\n¿Cuantas pastas desea ordenar?: ";
-                    cin >> p.dishP.pasta;
-                    monto = monto + (pasta * p.dishP.pasta);
+                    cin >> aux.dishP.pasta;
+                    monto = monto + (pasta * aux.dishP.pasta);
                     break;
                 case 3:
                     cout << "\n¿Cuantas lasagnas desea ordenar?: ";
-                    cin >> p.dishP.lasagna;
-                    monto = monto + (lasagna * p.dishP.lasagna);
+                    cin >> aux.dishP.lasagna;
+                    monto = monto + (lasagna * aux.dishP.lasagna);
                     break;
                 case 4:
                     continuar = false;
@@ -366,18 +363,18 @@ void DeliveryOrders()
                 {
                 case 1:
                     cout << "\n¿Cuantas ordenes de cheese sticks desea ordenar?: ";
-                    cin >> p.starterP.cheeseSticks;
-                    monto = monto + (cheeseSticks * p.starterP.cheeseSticks);
+                    cin >> aux.starterP.cheeseSticks;
+                    monto = monto + (cheeseSticks * aux.starterP.cheeseSticks);
                     break;
                 case 2:
                     cout << "\n¿Cuantas ordenes de pan con ajo desea ordenar?: ";
-                    cin >> p.starterP.garlicBread;
-                    monto = monto + (garlicBread * p.starterP.garlicBread);
+                    cin >> aux.starterP.garlicBread;
+                    monto = monto + (garlicBread * aux.starterP.garlicBread);
                     break;
                 case 3:
                     cout << "\n¿Cuantas ordenas de pizza rolls desea ordenar?: ";
-                    cin >> p.starterP.pizzaRolls;
-                    monto = monto + (pizzaRolls * p.starterP.pizzaRolls);
+                    cin >> aux.starterP.pizzaRolls;
+                    monto = monto + (pizzaRolls * aux.starterP.pizzaRolls);
                     break;
                 case 4:
                     continuar = false;
@@ -406,18 +403,18 @@ void DeliveryOrders()
                 {
                 case 1:
                     cout << "\n¿Cuantas cervezas desea ordenar?: ";
-                    cin >> p.drinksP.beer;
-                    monto = monto + (beer * p.drinksP.beer);
+                    cin >> aux.drinksP.beer;
+                    monto = monto + (beer * aux.drinksP.beer);
                     break;
                 case 2:
                     cout << "\n¿Cuantas sodas desea ordenar?: ";
-                    cin >> p.drinksP.soda;
-                    monto = monto + (soda * p.drinksP.soda);
+                    cin >> aux.drinksP.soda;
+                    monto = monto + (soda * aux.drinksP.soda);
                     break;
                 case 3:
                     cout << "\n¿Cuantos té helado desea ordenar?: ";
-                    cin >> p.drinksP.iceTea;
-                    monto = monto + (iceTea * p.drinksP.iceTea);
+                    cin >> aux.drinksP.iceTea;
+                    monto = monto + (iceTea * aux.drinksP.iceTea);
                     break;
                 case 4:
                     continuar = false;
@@ -444,27 +441,26 @@ void DeliveryOrders()
     cout << "\nOpcion: ";
     cin >> option3;
     cin.ignore();
-    orders.push_back(p);
+    orders.push_back(aux);
 }
 
 void RestaurantOrders()
 {
-    restaurantP aux;
+    pRestaurant aux;
     bool continuar = true;
     int option = 0, option2 = 0, option3 = 0;
-    restaurantP p;
     orderNumber = orderNumber + 1;
     float pizza = 13.99, pasta = 5.55, lasagna = 6.25, beer = 1.99, soda = 0.95, iceTea = 1.15, pizzaRolls = 4.99, cheeseSticks = 3.75, garlicBread = 3.99;
 
     cout << "\nNúmero de orden #" << orderNumber << endl;
-    cout << "Ingrese el nombre de la reserva : ";
+    cout << "Ingrese el nombre de la reserva: ";
     cin.ignore();
-    getline(cin, aux.FullName);
+    getline(cin, aux.reserva);
 
     do
     {
 
-        cout << "Cuantas personas por mesa:";
+        cout << "¿Cuantas personas por mesa: ";
         cin >> PerTable;
 
         continuar = true;
@@ -501,18 +497,18 @@ void RestaurantOrders()
                         {
                         case 1:
                             cout << "\n¿Cuantas pizzas desea ordenar?: ";
-                            cin >> p.dishP.pizza;
-                            monto = monto + (pizza * p.dishP.pizza);
+                            cin >> aux.dishQ.pizza;
+                            monto = monto + (pizza * aux.dishQ.pizza);
                             break;
                         case 2:
                             cout << "\n¿Cuantas pastas desea ordenar?: ";
-                            cin >> p.dishP.pasta;
-                            monto = monto + (pasta * p.dishP.pasta);
+                            cin >> aux.dishQ.pasta;
+                            monto = monto + (pasta * aux.dishQ.pasta);
                             break;
                         case 3:
                             cout << "\n¿Cuantas lasagnas desea ordenar?: ";
-                            cin >> p.dishP.lasagna;
-                            monto = monto + (lasagna * p.dishP.lasagna);
+                            cin >> aux.dishQ.lasagna;
+                            monto = monto + (lasagna * aux.dishQ.lasagna);
                             break;
                         case 4:
                             continuar = false;
@@ -541,18 +537,18 @@ void RestaurantOrders()
                         {
                         case 1:
                             cout << "\n¿Cuantas ordenes de cheese sticks desea ordenar?: ";
-                            cin >> p.starterP.cheeseSticks;
-                            monto = monto + (cheeseSticks * p.starterP.cheeseSticks);
+                            cin >> aux.starterQ.cheeseSticks;
+                            monto = monto + (cheeseSticks * aux.starterQ.cheeseSticks);
                             break;
                         case 2:
                             cout << "\n¿Cuantas ordenes de pan con ajo desea ordenar?: ";
-                            cin >> p.starterP.garlicBread;
-                            monto = monto + (garlicBread * p.starterP.garlicBread);
+                            cin >> aux.starterQ.garlicBread;
+                            monto = monto + (garlicBread * aux.starterQ.garlicBread);
                             break;
                         case 3:
                             cout << "\n¿Cuantas ordenas de pizza rolls desea ordenar?: ";
-                            cin >> p.starterP.pizzaRolls;
-                            monto = monto + (pizzaRolls * p.starterP.pizzaRolls);
+                            cin >> aux.starterQ.pizzaRolls;
+                            monto = monto + (pizzaRolls * aux.starterQ.pizzaRolls);
                             break;
                         case 4:
                             continuar = false;
@@ -580,18 +576,18 @@ void RestaurantOrders()
                         {
                         case 1:
                             cout << "\n¿Cuantas cervezas desea ordenar?: ";
-                            cin >> p.drinksP.beer;
-                            monto = monto + (beer * p.drinksP.beer);
+                            cin >> aux.drinksQ.beer;
+                            monto = monto + (beer * aux.drinksQ.beer);
                             break;
                         case 2:
                             cout << "\n¿Cuantas sodas desea ordenar?: ";
-                            cin >> p.drinksP.soda;
-                            monto = monto + (soda * p.drinksP.soda);
+                            cin >> aux.drinksQ.soda;
+                            monto = monto + (soda * aux.drinksQ.soda);
                             break;
                         case 3:
                             cout << "\n¿Cuantos té helado desea ordenar?: ";
-                            cin >> p.drinksP.iceTea;
-                            monto = monto + (iceTea * p.drinksP.iceTea);
+                            cin >> aux.drinksQ.iceTea;
+                            monto = monto + (iceTea * aux.drinksQ.iceTea);
                             break;
                         case 4:
                             continuar = false;
@@ -618,11 +614,11 @@ void RestaurantOrders()
             cout << "\nOpcion: ";
             cin >> option3;
             cin.ignore();
-            orders.push_back(p);
+            restaurantP.push_back(aux);
         }
         else
         {
-            cout << "Máximo 5 personas" << endl;
+            cout << "Máximo 5 personas por mesa" << endl;
         }
     } while (continuar);
 }
@@ -630,6 +626,7 @@ void RestaurantOrders()
 void WatchDelivery(Delivery aux)
 {
     cout << endl;
+    cout << "-------------------------------";
     cout << "\n---Datos del cliente---";
     cout << "\nNúmero de orden: #" << orderNumber;
     cout << "\nNombre del cliente: " << aux.FullName;
@@ -677,14 +674,16 @@ void WatchDelivery(Delivery aux)
     cout << "Monto total: $" << monto << " dólares" << endl;
 
     cout << "Tipo de pago: ";
-    switch(aux.pay)
+    switch (aux.pay)
     {
-        case cash: cout << "Efectivo" << endl;
+    case cash:
+        cout << "Efectivo" << endl;
         break;
-        case card: cout << "Tarjeta de crédito" << endl;
+    case card:
+        cout << "Tarjeta de crédito" << endl;
         break;
     }
-
+    cout << "-------------------------------";
 }
 
 void WatchDeliveryOrders()
@@ -695,71 +694,71 @@ void WatchDeliveryOrders()
     }
 }
 
-void WatchRestaurant(Delivery aux)
+void WatchRestaurant(pRestaurant aux)
 {
     cout << endl;
-    cout << "\n---Datos del cliente---";
+    cout << "-------------------------------";
+    cout << "---Datos del cliente---";
     cout << "\nNúmero de orden: #" << orderNumber;
-    cout << "\nNombre del cliente: " << aux.FullName;
-    cout << "\nDepartamento: " << aux.deliveryAddress.department;
-    cout << "\nMunicipio: " << aux.deliveryAddress.municipality;
-    cout << "\nColonia: " << aux.deliveryAddress.settlement;
-    cout << "\nNo. de casa: " << aux.deliveryAddress.houseNumber;
+    cout << "\nNombre del cliente: " << aux.reserva;
+    cout << "Personas por mesa: " << PerTable << endl;
     cout << "\n---Orden del cliente---\n";
-    if (aux.dishP.pizza != 0)
+    if (aux.dishQ.pizza != 0)
     {
-        cout << "Pizza: " << aux.dishP.pizza << endl;
+        cout << "Pizza: " << aux.dishQ.pizza << endl;
     }
-    if (aux.dishP.pasta != 0)
+    if (aux.dishQ.pasta != 0)
     {
-        cout << "Pasta: " << aux.dishP.pasta << endl;
+        cout << "Pasta: " << aux.dishQ.pasta << endl;
     }
-    if (aux.dishP.lasagna != 0)
+    if (aux.dishQ.lasagna != 0)
     {
-        cout << "Lasagna: " << aux.dishP.lasagna << endl;
+        cout << "Lasagna: " << aux.dishQ.lasagna << endl;
     }
-    if (aux.starterP.cheeseSticks != 0)
+    if (aux.starterQ.cheeseSticks != 0)
     {
-        cout << "Ordenes de cheese Sticks: " << aux.starterP.cheeseSticks << endl;
+        cout << "Ordenes de cheese Sticks: " << aux.starterQ.cheeseSticks << endl;
     }
-    if (aux.starterP.garlicBread != 0)
+    if (aux.starterQ.garlicBread != 0)
     {
-        cout << "Ordenes de pan con ajo: " << aux.starterP.garlicBread << endl;
+        cout << "Ordenes de pan con ajo: " << aux.starterQ.garlicBread << endl;
     }
-    if (aux.starterP.pizzaRolls != 0)
+    if (aux.starterQ.pizzaRolls != 0)
     {
-        cout << "Ordenes de pizza Rolls: " << aux.starterP.pizzaRolls << endl;
+        cout << "Ordenes de pizza Rolls: " << aux.starterQ.pizzaRolls << endl;
     }
-    if (aux.drinksP.beer != 0)
+    if (aux.drinksQ.beer != 0)
     {
-        cout << "Cerveza: " << aux.drinksP.beer << endl;
+        cout << "Cerveza: " << aux.drinksQ.beer << endl;
     }
-    if (aux.drinksP.soda != 0)
+    if (aux.drinksQ.soda != 0)
     {
-        cout << "Soda: " << aux.drinksP.soda << endl;
+        cout << "Soda: " << aux.drinksQ.soda << endl;
     }
-    if (aux.drinksP.iceTea != 0)
+    if (aux.drinksQ.iceTea != 0)
     {
-        cout << "Té helado: " << aux.drinksP.iceTea << endl;
+        cout << "Té helado: " << aux.drinksQ.iceTea << endl;
     }
     cout << "Monto total: $" << monto << " dólares" << endl;
     cout << "Tipo de pago: ";
-    switch(aux.pay)
+    switch (aux.payQ)
     {
-        case cash: cout << "Efectivo" << endl;
+    case cash:
+        cout << "Efectivo" << endl;
         break;
-        case card: cout << "Tarjeta de crédito" << endl;
+    case card:
+        cout << "Tarjeta de crédito" << endl;
         break;
     }
-
-    cout << "Personas por mesa: " << PerTable << endl;
+    cout << "-------------------------------" << endl;
+    
 }
 
 void WatchRestaurantOrders()
 {
-    for (int i = 0; i < orders.size(); i++)
+    for (int i = 0; i < restaurantP.size(); i++)
     {
-        WatchRestaurant(orders[i]);
+        WatchRestaurant(restaurantP[i]);
     }
 }
 
@@ -771,10 +770,10 @@ void ServeRestaurantsOrders()
 {
 }
 
-void WaitTimeDeliveryOrders() //sobrecarga
+void WaitTime(vector<Delivery> orders) //sobrecarga
 {
 }
-void WaitTimeRestaurantsOrders() //sobrecarga
+void WaitTime(vector<pRestaurant> restaurantP) //sobrecarga
 {
 }
 
