@@ -835,24 +835,6 @@ void ServeRestaurantsOrders()
 {
 }
 
-/*void WaitTime(vector<Delivery> orders) //sobrecarga
-{
-    float sum = 0, result;
-    Delivery aux;
-
-    for (Delivery aux : orders)
-    {
-        sum += (
-            (aux.dishP.pasta * 1.5 + aux.dishP.pizza * 1.5 + aux.dishP.lasagna * 1.5) + 
-            (aux.starterP.cheeseSticks * 1.10 + aux.starterP.garlicBread * 1.10 + aux.starterP.pizzaRolls * 1.10) + 
-            (aux.drinksP.beer * 1.35 + aux.drinksP.soda * 1.35 + aux.drinksP.iceTea * 1.35) 
-            + 15);
-    }
-    result = ceil(sum);
-    cout << "\n--------------------------------------------------------------------" << endl;
-    cout << "El tiempo total de espera de las ordenes a domicilio es: " << result << " minutos" << endl;
-    cout << "--------------------------------------------------------------------" << endl;
-}*/
 
 
 void WaitTime(vector<Delivery> deliveryP) //sobrecarga
@@ -864,14 +846,14 @@ void WaitTime(vector<Delivery> deliveryP) //sobrecarga
     cout << "-------------------------------------------------------------------------" << endl;
 }
 
-float recursiveSum(vector<Delivery> something, int indice){
-    if(indice < something.size()){
+float recursiveSum(vector<Delivery> deliveryP, int indice){
+    if(indice < deliveryP.size()){
         float tiempoInd = (
-            (something[indice].dishP.pasta * 1.5 + something[indice].dishP.pizza * 1.5 + something[indice].dishP.lasagna * 1.5) + 
-            (something[indice].starterP.cheeseSticks * 1.10 + something[indice].starterP.garlicBread * 1.10 + something[indice].starterP.pizzaRolls * 1.10) + 
-            (something[indice].drinksP.beer * 1.35 + something[indice].drinksP.soda * 1.35 + something[indice].drinksP.iceTea * 1.35) + 
+            (deliveryP[indice].dishP.pasta * 1.5 + deliveryP[indice].dishP.pizza * 1.5 + deliveryP[indice].dishP.lasagna * 1.5) + 
+            (deliveryP[indice].starterP.cheeseSticks * 1.10 + deliveryP[indice].starterP.garlicBread * 1.10 + deliveryP[indice].starterP.pizzaRolls * 1.10) + 
+            (deliveryP[indice].drinksP.beer * 1.35 + deliveryP[indice].drinksP.soda * 1.35 + deliveryP[indice].drinksP.iceTea * 1.35) + 
             15);
-        return tiempoInd + recursiveSum(something, indice + 1);
+        return tiempoInd + recursiveSum(deliveryP, indice + 1);
     }
     else
     {
