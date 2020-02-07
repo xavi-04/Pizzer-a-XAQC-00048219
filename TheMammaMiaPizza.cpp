@@ -144,8 +144,8 @@ char EmployeMenu(char aux)
         cout << "\t4) Ver ordenes en restaurante\n";
         cout << "\t5) Despachar ordenes a domicilio\n";
         cout << "\t6) Despachar ordenes a restaurante\n";
-        cout << "\t7) Ver timepo promedio de espera a domicilio\n";
-        cout << "\t8) Ver timepo promedio de espera en restuarante\n";
+        cout << "\t7) Ver tiempo promedio de espera a domicilio\n";
+        cout << "\t8) Ver tiempo promedio de espera en restuarante\n";
         cout << "\t9) Calcular total de ventas\n";
         cout << "\t10) Cambiar de usuario\n";
         cout << "\t11) Salir\n";
@@ -475,11 +475,10 @@ void DeliveryOrders()
         aux.pay = card;
     }
 
-    aux.timeP = (
-        (aux.dishP.pasta * 1.5 + aux.dishP.pizza * 1.5 + aux.dishP.lasagna * 1.5) + 
-        (aux.starterP.cheeseSticks * 1.10 + aux.starterP.garlicBread * 1.10 + aux.starterP.pizzaRolls * 1.10) + 
-        (aux.drinksP.beer * 1.35 + aux.drinksP.soda * 1.35 + aux.drinksP.iceTea * 1.35) + 
-        15);
+    aux.timeP = ((aux.dishP.pasta * 1.5 + aux.dishP.pizza * 1.5 + aux.dishP.lasagna * 1.5) +
+                 (aux.starterP.cheeseSticks * 1.10 + aux.starterP.garlicBread * 1.10 + aux.starterP.pizzaRolls * 1.10) +
+                 (aux.drinksP.beer * 1.35 + aux.drinksP.soda * 1.35 + aux.drinksP.iceTea * 1.35) +
+                 15);
     cout << "\nEl tiempo de espera de la orden del cliente es: " << aux.timeP << " minutos" << endl;
 
     deliveryP.push_back(aux);
@@ -495,7 +494,7 @@ void RestaurantOrders()
     aux.orderId = 0;
     bool continuar = true;
     int option = 0, option2 = 0, option3 = 0;
-    
+
     float pizza = 13.99, pasta = 5.55, lasagna = 6.25, beer = 1.99, soda = 0.95, iceTea = 1.15, pizzaRolls = 4.99, cheeseSticks = 3.75, garlicBread = 3.99;
 
     cout << "\n-------------------------------------" << endl;
@@ -680,10 +679,7 @@ void RestaurantOrders()
         }
     } while (continuar);
 
-    aux.timeQ = ((aux.dishQ.pasta * 1.5 + aux.dishQ.pizza * 1.5 + aux.dishQ.lasagna * 1.5) 
-    + (aux.starterQ.cheeseSticks * 1.10 + aux.starterQ.garlicBread * 1.10 + aux.starterQ.pizzaRolls * 1.10) 
-    + (aux.drinksQ.beer * 1.35 + aux.drinksQ.soda * 1.35 + aux.drinksQ.iceTea * 1.35) 
-    + 15);
+    aux.timeQ = ((aux.dishQ.pasta * 1.5 + aux.dishQ.pizza * 1.5 + aux.dishQ.lasagna * 1.5) + (aux.starterQ.cheeseSticks * 1.10 + aux.starterQ.garlicBread * 1.10 + aux.starterQ.pizzaRolls * 1.10) + (aux.drinksQ.beer * 1.35 + aux.drinksQ.soda * 1.35 + aux.drinksQ.iceTea * 1.35) + 15);
     cout << "\nEl tiempo de espera de la orden del cliente es: " << aux.timeQ << " minutos" << endl;
 
     restaurantP.push_back(aux);
@@ -835,31 +831,64 @@ void ServeRestaurantsOrders()
 {
 }
 
+void WaitTime(vector<Delivery> deliveryP) //sobrecarga
+{
+    float sum = recursiveSum(deliveryP, 0);
 
+    cout << "\n-------------------------------------------------------------------------" << endl;
+    cout << "El tiempo total de espera de las ordenes en el restaurante es: " << ceil(sum) << " minutos" << endl;
+    cout << "-------------------------------------------------------------------------" << endl;
+}
 
-
+float recursiveSum(vector<Delivery> deliveryP, int indice)
+{
+    if (indice < deliveryP.size())
+    {
+        float tiempoInd = ((deliveryP[indice].dishP.pasta * 1.5 + deliveryP[indice].dishP.pizza * 1.5 + deliveryP[indice].dishP.lasagna * 1.5) +
+                           (deliveryP[indice].starterP.cheeseSticks * 1.10 + deliveryP[indice].starterP.garlicBread * 1.10 + deliveryP[indice].starterP.pizzaRolls * 1.10) +
+                           (deliveryP[indice].drinksP.beer * 1.35 + deliveryP[indice].drinksP.soda * 1.35 + deliveryP[indice].drinksP.iceTea * 1.35) +
+                           15);
+        return tiempoInd + recursiveSum(deliveryP, indice + 1);
+    }
+    else
+    {
+        return 0;
+    }
+}
 
 void WaitTime(vector<pRestaurant> restaurantP) //sobrecarga
 {
     float sum = 0;
     pRestaurant aux;
 
-    
     for (pRestaurant aux : restaurantP)
     {
-        sum += (
-            (aux.dishQ.pasta * 1.5 + aux.dishQ.pizza * 1.5 + aux.dishQ.lasagna * 1.5) + 
-            (aux.starterQ.cheeseSticks * 1.10 + aux.starterQ.garlicBread * 1.10 + aux.starterQ.pizzaRolls * 1.10) + 
-            (aux.drinksQ.beer * 1.35 + aux.drinksQ.soda * 1.35 + aux.drinksQ.iceTea * 1.35) + 
-            15);
+        sum += ((aux.dishQ.pasta * 1.5 + aux.dishQ.pizza * 1.5 + aux.dishQ.lasagna * 1.5) +
+                (aux.starterQ.cheeseSticks * 1.10 + aux.starterQ.garlicBread * 1.10 + aux.starterQ.pizzaRolls * 1.10) +
+                (aux.drinksQ.beer * 1.35 + aux.drinksQ.soda * 1.35 + aux.drinksQ.iceTea * 1.35) +
+                15);
     }
-    
+
     cout << "\n-------------------------------------------------------------------------" << endl;
     cout << "El tiempo total de espera de las ordenes en el restaurante es: " << ceil(sum) << " minutos" << endl;
     cout << "-------------------------------------------------------------------------" << endl;
 }
+float recursiveSum(vector<pRestaurant> restaurantP, int indice)
+{
+    if (indice < restaurantP.size())
+    {
+        float tiempoInd = ((restaurantP[indice].dishQ.pasta * 1.5 + restaurantP[indice].dishQ.pizza * 1.5 + restaurantP[indice].dishQ.lasagna * 1.5) +
+                           (restaurantP[indice].starterQ.cheeseSticks * 1.10 + restaurantP[indice].starterQ.garlicBread * 1.10 + restaurantP[indice].starterQ.pizzaRolls * 1.10) +
+                           (restaurantP[indice].drinksQ.beer * 1.35 + restaurantP[indice].drinksQ.soda * 1.35 + restaurantP[indice].drinksQ.iceTea * 1.35) +
+                           15);
+        return tiempoInd + recursiveSum(restaurantP, indice + 1);
+    }
+    else
+    {
+        return 0;
+    }
+}
 
- 
 void CancelOrder()
 {
 }
