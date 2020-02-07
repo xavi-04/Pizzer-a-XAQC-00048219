@@ -844,11 +844,11 @@ float recursiveSum(vector<Delivery> deliveryP, int indice)
 {
     if (indice < deliveryP.size())
     {
-        float tiempoInd = ((deliveryP[indice].dishP.pasta * 1.5 + deliveryP[indice].dishP.pizza * 1.5 + deliveryP[indice].dishP.lasagna * 1.5) +
+        float indivTime = ((deliveryP[indice].dishP.pasta * 1.5 + deliveryP[indice].dishP.pizza * 1.5 + deliveryP[indice].dishP.lasagna * 1.5) +
                            (deliveryP[indice].starterP.cheeseSticks * 1.10 + deliveryP[indice].starterP.garlicBread * 1.10 + deliveryP[indice].starterP.pizzaRolls * 1.10) +
                            (deliveryP[indice].drinksP.beer * 1.35 + deliveryP[indice].drinksP.soda * 1.35 + deliveryP[indice].drinksP.iceTea * 1.35) +
                            15);
-        return tiempoInd + recursiveSum(deliveryP, indice + 1);
+        return indivTime + recursiveSum(deliveryP, indice + 1);
     }
     else
     {
@@ -858,16 +858,7 @@ float recursiveSum(vector<Delivery> deliveryP, int indice)
 
 void WaitTime(vector<pRestaurant> restaurantP) //sobrecarga
 {
-    float sum = 0;
-    pRestaurant aux;
-
-    for (pRestaurant aux : restaurantP)
-    {
-        sum += ((aux.dishQ.pasta * 1.5 + aux.dishQ.pizza * 1.5 + aux.dishQ.lasagna * 1.5) +
-                (aux.starterQ.cheeseSticks * 1.10 + aux.starterQ.garlicBread * 1.10 + aux.starterQ.pizzaRolls * 1.10) +
-                (aux.drinksQ.beer * 1.35 + aux.drinksQ.soda * 1.35 + aux.drinksQ.iceTea * 1.35) +
-                15);
-    }
+    float sum = recursiveSum(restaurantP, 0);
 
     cout << "\n-------------------------------------------------------------------------" << endl;
     cout << "El tiempo total de espera de las ordenes en el restaurante es: " << ceil(sum) << " minutos" << endl;
@@ -877,11 +868,11 @@ float recursiveSum(vector<pRestaurant> restaurantP, int indice)
 {
     if (indice < restaurantP.size())
     {
-        float tiempoInd = ((restaurantP[indice].dishQ.pasta * 1.5 + restaurantP[indice].dishQ.pizza * 1.5 + restaurantP[indice].dishQ.lasagna * 1.5) +
+        float indivTime = ((restaurantP[indice].dishQ.pasta * 1.5 + restaurantP[indice].dishQ.pizza * 1.5 + restaurantP[indice].dishQ.lasagna * 1.5) +
                            (restaurantP[indice].starterQ.cheeseSticks * 1.10 + restaurantP[indice].starterQ.garlicBread * 1.10 + restaurantP[indice].starterQ.pizzaRolls * 1.10) +
                            (restaurantP[indice].drinksQ.beer * 1.35 + restaurantP[indice].drinksQ.soda * 1.35 + restaurantP[indice].drinksQ.iceTea * 1.35) +
                            15);
-        return tiempoInd + recursiveSum(restaurantP, indice + 1);
+        return indivTime + recursiveSum(restaurantP, indice + 1);
     }
     else
     {
