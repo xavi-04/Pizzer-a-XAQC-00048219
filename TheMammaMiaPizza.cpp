@@ -846,7 +846,7 @@ void ServeDeliveryOrders()
     int i = 0;
     for (auto iter = deliveryP.begin(); iter != deliveryP.end(); ++iter)
     {
-        if (iter->FullName == orderName)
+        if (iter->FullName.compare(orderName))
         {
             aux1.push_back(deliveryP.at(i));
             iter  = deliveryP.erase(iter);
@@ -857,7 +857,7 @@ void ServeDeliveryOrders()
         cout << "Pedidos actuales: ";
         for (int i = 0; i < deliveryP.size(); i++)
         {
-            cout << deliveryP[i].FullName << " , ";
+            cout << deliveryP[i].FullName << "  ";
         }
         cout << endl;
         i++;
@@ -875,7 +875,7 @@ void ServeRestaurantsOrders()
     int i = 0;
     for (auto iter = restaurantP.begin(); iter != restaurantP.end(); ++iter)
     {
-        if (iter->reservationClient == orderName)
+        if (iter->reservationClient.compare(orderName))
         {
             aux2.push_back(restaurantP.at(i)); 
             iter = restaurantP.erase(iter);
@@ -886,7 +886,7 @@ void ServeRestaurantsOrders()
         cout << "Pedidos actuales: ";
         for (int i = 0; i < restaurantP.size(); i++)
         {
-            cout << restaurantP[i].reservationClient << " , ";
+            cout << restaurantP[i].reservationClient << "  ";
         }
         cout << endl;
     }
@@ -955,7 +955,7 @@ void CancelOrder(vector<Delivery> deliveryP)
             if (deliveryP[i].FullName == aName)
             {
                 found = true;
-                cout << "\n¿Seguro que desea eliminar esta orden?";
+                cout << "\n¿Eliminar esta orden?";
                 cout << "\n1. Si";
                 cout << "\n2.No";
                 cin >> confirm;
