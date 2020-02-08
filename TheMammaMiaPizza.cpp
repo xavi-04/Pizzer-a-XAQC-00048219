@@ -95,7 +95,7 @@ void WaitTime(vector<pRestaurant> restaurantP);
 float recursiveSum(vector<Delivery>, int indice);
 float recursiveSum(vector<pRestaurant> restaurantP, int indice);
 void CancelOrder(vector<Delivery> deliveryP);
-void CalculateTotalSales();
+float CalculateTotalSales(int pos);
 
 int main()
 {
@@ -877,7 +877,7 @@ void ServeRestaurantsOrders()
     {
         if (iter->reservationClient == orderName)
         {
-            aux2.push_back(restaurantP.at(i));
+            aux2.push_back(restaurantP.at(i)); 
             iter = restaurantP.erase(iter);
             cout << "La orden ha sido despachada.\n";
             break;
@@ -982,6 +982,9 @@ void CancelOrder(vector<Delivery> deliveryP)
         }
 }
 
-void CalculateTotalSales()
+//void CancelOrder(vector<Delivery> deliveryP)
+float CalculateTotalSales()
 {
+    
+
 }
