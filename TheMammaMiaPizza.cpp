@@ -94,7 +94,7 @@ void WaitTime(vector<Delivery> orders);
 void WaitTime(vector<pRestaurant> restaurantP);
 float recursiveSum(vector<Delivery>, int indice);
 float recursiveSum(vector<pRestaurant> restaurantP, int indice);
-void CancelOrder();
+void CancelOrder(vector<Delivery> deliveryP);
 void CalculateTotalSales();
 
 int main()
@@ -217,7 +217,7 @@ char AdminMenu(char aux)
         cout << "\n-----------------------------------------------" << endl;
         cout << "***Sistema de despacho The Mamma Mia´s Pizza***" << endl;
         cout << "-----------------------------------------------" << endl;
-        cout << "\n\\tt--------------" << endl;
+        cout << "\n\t\t--------------" << endl;
         cout << "\t\tMenú Principal" << endl;
         cout << "\t\t--------------" << endl;
         cout << "\t1) Agregar orden a domicilio\n";
@@ -262,7 +262,7 @@ char AdminMenu(char aux)
             WaitTime(restaurantP);
             break;
         case 9:
-            //CancelOrder();
+            CancelOrder(deliveryP);
             break;
         case 10:
             //CalculateTotalSales();
@@ -940,9 +940,46 @@ float recursiveSum(vector<pRestaurant> restaurantP, int indice)
     }
 }
 
-void CancelOrder()
+void CancelOrder(vector<Delivery> deliveryP)
 {
-    
+    string aName;
+    int confirm;
+    bool found = true;
+
+        cout << "Ingrese el nombre de la orden que desea eliminar: ";
+        cin >> aName;
+        getline(cin, aName);
+        cout << endl;
+        for (int i = 0; i < deliveryP.size(); i++)
+        {
+            if (deliveryP[i].FullName == aName)
+            {
+                found = true;
+                cout << "\n¿Seguro que desea eliminar esta orden?";
+                cout << "\n1. Si";
+                cout << "\n2.No";
+                cin >> confirm;
+                cin.ignore();
+                if (confirm == 1)
+                {
+                    for (auto iter = deliveryP.begin(); iter != deliveryP.end(); ++iter)
+                    {
+                        if (iter->FullName == aName)
+                        {
+                            iter = deliveryP.erase(iter);
+                            cout << "La orden ha sido eliminada\n";
+                            break;
+                        }
+                    }
+                }
+                else{}
+            }
+        }
+        if (found == false)
+        {
+            cout << "No se encontro la orden.\n";
+            return;
+        }
 }
 
 void CalculateTotalSales()
