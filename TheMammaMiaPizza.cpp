@@ -95,6 +95,7 @@ void WaitTime(vector<pRestaurant> restaurantP);
 float recursiveSum(vector<Delivery>, int indice);
 float recursiveSum(vector<pRestaurant> restaurantP, int indice);
 void CancelOrder(vector<Delivery> &deliveryP);
+void CancelOrder(vector<pRestaurant> &restaurantP);
 float CalculateTotalSales(int pos);
 
 int main()
@@ -210,6 +211,7 @@ char EmployeMenu(char aux)
 char AdminMenu(char aux)
 {
     int option = 0;
+    int option2 = 0;
     bool continuar = true;
     do
     {
@@ -262,7 +264,8 @@ char AdminMenu(char aux)
             WaitTime(restaurantP);
             break;
         case 9:
-            CancelOrder(deliveryP);
+            
+            
             break;
         case 10:
             //CalculateTotalSales();
@@ -957,7 +960,8 @@ void CancelOrder(vector<Delivery> &deliveryP)
                 found = true;
                 cout << "\n¿Eliminar esta orden?";
                 cout << "\n1. Si";
-                cout << "\n2.No";
+                cout << "\n2. No";
+                cout << "\nSu opción: ";
                 cin >> confirm;
                 cin.ignore();
                 if (confirm == 1)
@@ -977,10 +981,52 @@ void CancelOrder(vector<Delivery> &deliveryP)
         }
         if (found == false)
         {
-            cout << "No se encontro la orden.\n";
+            cout << "No se encontro la orden\n";
             return;
         }
 }
+
+void CancelOrder(vector<pRestaurant> &restaurantP){
+    string aName;
+    int confirm;
+    bool found = true;
+
+        cout << "Ingrese el nombre de la orden que desea eliminar: ";
+        cin >> aName;
+        getline(cin, aName);
+        cout << endl;
+        for (int i = 0; i < restaurantP.size(); i++)
+        {
+            if (restaurantP[i].reservationClient.compare(aName))
+            {
+                found = true;
+                cout << "\n¿Eliminar esta orden?";
+                cout << "\n1. Si";
+                cout << "\n2. No";
+                cout << "\nSu opción: ";
+                cin >> confirm;
+                cin.ignore();
+                if (confirm == 1)
+                {
+                    for (auto iter = restaurantP.begin(); iter != restaurantP.end(); ++iter)
+                    {
+                        if (iter->reservationClient.compare(aName))
+                        {
+                            iter = restaurantP.erase(iter);
+                            cout << "La orden ha sido eliminada\n";
+                            break;
+                        }
+                    }
+                }
+                else{}
+            }
+        }
+        if (found == false)
+        {
+            cout << "No se encontro la orden\n";
+            return;
+        }
+};
 
 //void CancelOrder(vector<Delivery> deliveryP)
 float CalculateTotalSales()
