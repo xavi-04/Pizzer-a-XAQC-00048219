@@ -264,7 +264,26 @@ char AdminMenu(char aux)
             WaitTime(restaurantP);
             break;
         case 9:
+            cout << "\n¿Donde desea cancelar la orden?: ";
+            cout << "\n1. Domicilio";
+            cout << "\n2. Restaurante";
+            cout << "\nSu opción: ";
+            cin >> option2;
             
+            switch (option2)
+            {
+            case 1:
+                CancelOrder(deliveryP);
+                break;
+
+            case 2:
+                CancelOrder(restaurantP);
+                break;
+            
+            default:
+                cout << "¡¡¡Opción inexistente!!!, intente de nuevo" << endl;
+                break;
+            }
             
             break;
         case 10:
