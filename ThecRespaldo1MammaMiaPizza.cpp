@@ -66,6 +66,17 @@ struct delivery
 };
 typedef struct delivery Delivery;
 
+struct packOff{
+    delivery takeOff;
+    address takeOff2;
+};
+typedef struct packOff serve;
+
+struct packOffRestuarant{
+    restaurant takeOff3;
+};
+typedef struct packOffRestaurant serveRestaurant;
+
 vector<Delivery> deliveryP, aux1;
 vector<pRestaurant> restaurantP, aux2;
 
@@ -83,8 +94,8 @@ void WaitTime(vector<Delivery> orders);
 void WaitTime(vector<pRestaurant> restaurantP);
 float recursiveSum(vector<Delivery>, int indice);
 float recursiveSum(vector<pRestaurant> restaurantP, int indice);
-void CancelOrder();
-void CalculateTotalSales();
+void CancelOrder(vector<Delivery> deliveryP);
+float CalculateTotalSales(int pos);
 
 int main()
 {
@@ -206,7 +217,7 @@ char AdminMenu(char aux)
         cout << "\n-----------------------------------------------" << endl;
         cout << "***Sistema de despacho The Mamma Mia´s Pizza***" << endl;
         cout << "-----------------------------------------------" << endl;
-        cout << "\n\\tt--------------" << endl;
+        cout << "\n\t\t--------------" << endl;
         cout << "\t\tMenú Principal" << endl;
         cout << "\t\t--------------" << endl;
         cout << "\t1) Agregar orden a domicilio\n";
@@ -251,7 +262,7 @@ char AdminMenu(char aux)
             WaitTime(restaurantP);
             break;
         case 9:
-            //CancelOrder();
+            CancelOrder(deliveryP);
             break;
         case 10:
             //CalculateTotalSales();
@@ -508,7 +519,7 @@ void RestaurantOrders()
     do
     {
 
-        cout << "¿Cuantas personas por mesason en total?: ";
+        cout << "¿Cuantas personas por mesa son en total?: ";
         cin >> PerTable;
 
         continuar = true;
@@ -827,18 +838,18 @@ void WatchRestaurantOrders()
 
 void ServeDeliveryOrders()
 {
-    string orderName;
 
-    cout << "Ingrese el nombre de la orden a despachar: ";
+    string orderName;
+    cout << "\nIngrese el nombre de la orden a despachar: ";
     cin >> orderName;
     getline(cin, orderName);
     int i = 0;
     for (auto iter = deliveryP.begin(); iter != deliveryP.end(); ++iter)
     {
-        if (iter->FullName == orderName)
+        if (iter->FullName.compare(orderName))
         {
             aux1.push_back(deliveryP.at(i));
-            iter = deliveryP.erase(iter);
+            iter  = deliveryP.erase(iter);
             cout << "La orden ha sido despachada\n";
             break;
         }
@@ -864,9 +875,9 @@ void ServeRestaurantsOrders()
     int i = 0;
     for (auto iter = restaurantP.begin(); iter != restaurantP.end(); ++iter)
     {
-        if (iter->reservationClient == orderName)
+        if (iter->reservationClient.compare(orderName))
         {
-            aux2.push_back(restaurantP.at(i));
+            aux2.push_back(restaurantP.at(i)); 
             iter = restaurantP.erase(iter);
             cout << "La orden ha sido despachada.\n";
             break;
@@ -929,10 +940,51 @@ float recursiveSum(vector<pRestaurant> restaurantP, int indice)
     }
 }
 
-void CancelOrder()
+void CancelOrder(vector<Delivery> deliveryP)
 {
+    string aName;
+    int confirm;
+    bool found = true;
+
+        cout << "Ingrese el nombre de la orden que desea eliminar: ";
+        cin >> aName;
+        getline(cin, aName);
+        cout << endl;
+        for (int i = 0; i < deliveryP.size(); i++)
+        {
+            if (deliveryP[i].FullName == aName)
+            {
+                found = true;
+                cout << "\n¿Eliminar esta orden?";
+                cout << "\n1. Si";
+                cout << "\n2.No";
+                cin >> confirm;
+                cin.ignore();
+                if (confirm == 1)
+                {
+                    for (auto iter = deliveryP.begin(); iter != deliveryP.end(); ++iter)
+                    {
+                        if (iter->FullName == aName)
+                        {
+                            iter = deliveryP.erase(iter);
+                            cout << "La orden ha sido eliminada\n";
+                            break;
+                        }
+                    }
+                }
+                else{}
+            }
+        }
+        if (found == false)
+        {
+            cout << "No se encontro la orden.\n";
+            return;
+        }
 }
 
-void CalculateTotalSales()
+//void CancelOrder(vector<Delivery> deliveryP)
+float CalculateTotalSales()
 {
+    
+
 }

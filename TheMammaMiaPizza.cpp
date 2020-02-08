@@ -94,7 +94,7 @@ void WaitTime(vector<Delivery> orders);
 void WaitTime(vector<pRestaurant> restaurantP);
 float recursiveSum(vector<Delivery>, int indice);
 float recursiveSum(vector<pRestaurant> restaurantP, int indice);
-void CancelOrder(vector<Delivery> deliveryP);
+void CancelOrder(vector<Delivery> &deliveryP);
 float CalculateTotalSales(int pos);
 
 int main()
@@ -940,7 +940,7 @@ float recursiveSum(vector<pRestaurant> restaurantP, int indice)
     }
 }
 
-void CancelOrder(vector<Delivery> deliveryP)
+void CancelOrder(vector<Delivery> &deliveryP)
 {
     string aName;
     int confirm;
@@ -952,7 +952,7 @@ void CancelOrder(vector<Delivery> deliveryP)
         cout << endl;
         for (int i = 0; i < deliveryP.size(); i++)
         {
-            if (deliveryP[i].FullName == aName)
+            if (deliveryP[i].FullName.compare(aName))
             {
                 found = true;
                 cout << "\n¿Eliminar esta orden?";
@@ -964,7 +964,7 @@ void CancelOrder(vector<Delivery> deliveryP)
                 {
                     for (auto iter = deliveryP.begin(); iter != deliveryP.end(); ++iter)
                     {
-                        if (iter->FullName == aName)
+                        if (iter->FullName.compare(aName))
                         {
                             iter = deliveryP.erase(iter);
                             cout << "La orden ha sido eliminada\n";
