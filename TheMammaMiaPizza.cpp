@@ -62,9 +62,6 @@ struct delivery
     Drinks drinksP;
     Starter starterP;
     paymentType pay;
-    vector<mainDish> dishT;
-    vector<drinks> drinksT;
-    vector<starter> starterT;
     float monto = 0, timeP;
 };
 typedef struct delivery Delivery;
@@ -1063,3 +1060,17 @@ float CalculateTotalSalesD(vector<Delivery> aux1)
     cout << "\nEl total de venta en domicilio es: $" << total << " doláres";
 }
 
+float CalculateTotalSalesR(vector<pRestaurant> aux2)
+{
+    float total = 0;
+    for(int i = 0; i < aux2.size(); i++){
+    total += ((aux2[i].dishQ.pizza * 13.99 + aux2[i].dishQ.pasta * 5.55 + aux2[i].dishQ.lasagna * 6.25 + 
+    aux2[i].starterQ.cheeseSticks * 3.75 + aux2[i].starterQ.garlicBread * 3.99 + aux2[i].starterQ.pizzaRolls * 4.99 + 
+    aux2[i].drinksQ.beer * 1.99 + aux2[i].drinksQ.soda * 0.95 + aux2[i].drinksQ.iceTea * 1.15) + 
+    ((aux2[i].dishQ.pizza * 13.99 + aux2[i].dishQ.pasta * 5.55 + aux2[i].dishQ.lasagna * 6.25 + 
+    aux2[i].starterQ.cheeseSticks * 3.75 + aux2[i].starterQ.garlicBread * 3.99 + aux2[i].starterQ.pizzaRolls * 4.99 + 
+    aux2[i].drinksQ.beer * 1.99 + aux2[i].drinksQ.soda * 0.95 + aux2[i].drinksQ.iceTea * 1.15) * 0.13) );
+    }
+
+    cout << "\nEl total de venta en el restaurante es: $" << total << " doláres";
+}
