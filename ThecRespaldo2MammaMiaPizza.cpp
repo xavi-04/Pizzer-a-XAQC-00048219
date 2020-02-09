@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <iomanip>
 #include <vector>
 using namespace std;
 
@@ -553,7 +554,7 @@ void DeliveryOrders()
                  (aux.starterP.cheeseSticks * 1.10 + aux.starterP.garlicBread * 1.10 + aux.starterP.pizzaRolls * 1.10) +
                  (aux.drinksP.beer * 1.35 + aux.drinksP.soda * 1.35 + aux.drinksP.iceTea * 1.35) +
                  15);
-    cout << "\nEl tiempo de espera de la orden del cliente es: " << aux.timeP << " minutos" << endl;
+    cout << "\nEl tiempo de espera de la orden del cliente es: " << ceil(aux.timeP) << " minutos" << endl;
 
     deliveryP.push_back(aux);
     cout << endl;
@@ -565,7 +566,6 @@ void RestaurantOrders()
     pRestaurant aux;
     aux.monto = 0;
     aux.orderId = ordersCount;
-
     bool continuar = true;
     int option = 0, option2 = 0, option3 = 0;
 
@@ -754,7 +754,7 @@ void RestaurantOrders()
     aux.timeQ = ((aux.dishQ.pasta * 1.5 + aux.dishQ.pizza * 1.5 + aux.dishQ.lasagna * 1.5) +
                  (aux.starterQ.cheeseSticks * 1.10 + aux.starterQ.garlicBread * 1.10 + aux.starterQ.pizzaRolls * 1.10) +
                  (aux.drinksQ.beer * 1.35 + aux.drinksQ.soda * 1.35 + aux.drinksQ.iceTea * 1.35));
-    cout << "\nEl tiempo de espera de la orden del cliente es: " << aux.timeQ << " minutos" << endl;
+    cout << "\nEl tiempo de espera de la orden del cliente es: " << ceil(aux.timeQ) << " minutos" << endl;
 
     restaurantP.push_back(aux);
     cout << endl;
@@ -822,7 +822,8 @@ void WatchDelivery(Delivery aux)
         cout << "Tarjeta de crédito" << endl;
         break;
     }
-    cout << "*******************************";
+    cout << "Tiempo de espera: " << ceil(aux.timeP) << " minutos";
+    cout << "\n---------------------------------------------------------------------------";
 }
 
 void WatchDeliveryOrders()
@@ -891,7 +892,8 @@ void WatchRestaurant(pRestaurant aux)
         cout << "Tarjeta de crédito" << endl;
         break;
     }
-    cout << "*******************************";
+    cout << "Tiempo de espera: " << ceil(aux.timeQ) << " minutos";
+    cout << "\n------------------------------------------------------------------";
 }
 
 void WatchRestaurantOrders()
@@ -909,7 +911,7 @@ void ServeDeliveryOrders()
     cout << "\n-------------------------------------" << endl;
     cout << "***Despacho de ordenes a domicilio***" << endl;
     cout << "-------------------------------------" << endl;
-    cout << "\nIngrese el nombre de la orden a despachar: ";
+    cout << "Nombre de la orden a despachar: ";
     cin >> orderName;
     getline(cin, orderName);
     int i = 0;
@@ -940,9 +942,9 @@ void ServeRestaurantsOrders()
     string orderName;
 
     cout << "\n----------------------------------------" << endl;
-    cout << "\n***Despacho de ordenes en restaurante***" << endl;
-    cout << "\n----------------------------------------" << endl;
-    cout << "Ingrese el nombre de la orden a despachar: ";
+    cout << "***Despacho de ordenes en restaurante***" << endl;
+    cout << "----------------------------------------" << endl;
+    cout << "Nombre de la orden a despachar: ";
     cin >> orderName;
     getline(cin, orderName);
     int i = 0;
@@ -952,7 +954,7 @@ void ServeRestaurantsOrders()
         {
             aux2.push_back(restaurantP.at(i));
             iter = restaurantP.erase(iter);
-            cout << "La orden ha sido despachada.\n";
+            cout << "La orden ha sido despachada\n";
             
         }
 
@@ -962,16 +964,22 @@ void ServeRestaurantsOrders()
             cout << restaurantP[i].reservationClient << "  ";
         }
         cout << endl;
+        i++;
+        break;
     }
+    cout << endl;
 }
 
-void WaitTime(vector<Delivery> deliveryP) //sobrecarga
+void WaitTime(vector<Delivery> deliveryP) 
 {
     float sum = recursiveSum(deliveryP, 0);
 
-    cout << "\n-------------------------------------------------------------------------" << endl;
+    cout << "\n\t\t----------------------------" << endl;
+    cout << "\t\tTiempo de espera a domicilio" << endl;
+    cout << "\t\t----------------------------" << endl;
+    cout << "--------------------------------------------------------------------" << endl;
     cout << "El tiempo total de espera de las ordenes a domicilio es: " << ceil(sum) << " minutos" << endl;
-    cout << "-------------------------------------------------------------------------" << endl;
+    cout << "--------------------------------------------------------------------" << endl;
 }
 
 float recursiveSum(vector<Delivery> deliveryP, int indice)
@@ -994,9 +1002,12 @@ void WaitTime(vector<pRestaurant> restaurantP)
 {
     float sum = recursiveSum(restaurantP, 0);
 
-    cout << "\n-------------------------------------------------------------------------" << endl;
+    cout << "\n\t\t-------------------------------" << endl;
+    cout << "\t\tTiempo de espera en restaurante" << endl;
+    cout << "\t\t-------------------------------" << endl;
+    cout << "----------------------------------------------------------------------------" << endl;
     cout << "El tiempo total de espera de las ordenes en el restaurante es: " << ceil(sum) << " minutos" << endl;
-    cout << "-------------------------------------------------------------------------" << endl;
+    cout << "----------------------------------------------------------------------------" << endl;
 }
 float recursiveSum(vector<pRestaurant> restaurantP, int indice)
 {
@@ -1019,7 +1030,10 @@ void CancelOrder(vector<Delivery> &deliveryP)
     int confirm;
     bool found = true;
 
-    cout << "Ingrese el nombre de la orden que desea eliminar: ";
+    cout << "\n----------------------------------" << endl;
+    cout << "***Orden a cancelar a domicilio***" << endl;
+    cout << "----------------------------------" << endl;
+    cout << "Nombre de la orden que desea eliminar: ";
     cin >> aName;
     getline(cin, aName);
     cout << endl;
@@ -1028,7 +1042,7 @@ void CancelOrder(vector<Delivery> &deliveryP)
         if (deliveryP[i].FullName.compare(aName))
         {
             found = true;
-            cout << "\n¿Eliminar esta orden?";
+            cout << "¿Seguro de eliminar esta orden?";
             cout << "\n1. Si";
             cout << "\n2. No";
             cout << "\nSu opción: ";
@@ -1041,7 +1055,7 @@ void CancelOrder(vector<Delivery> &deliveryP)
                     if (iter->FullName.compare(aName))
                     {
                         iter = deliveryP.erase(iter);
-                        cout << "La orden ha sido eliminada\n";
+                        cout << "\n***La orden ha sido eliminada***";
                         break;
                     }
                 }
@@ -1056,7 +1070,10 @@ void CancelOrder(vector<pRestaurant> &restaurantP)
     int confirm;
     bool found = true;
 
-    cout << "Ingrese el nombre de la orden que desea eliminar: ";
+    cout << "\n-------------------------------------" << endl;
+    cout << "***Orden a cancelar en restaurante***" << endl;
+    cout << "-------------------------------------" << endl;
+    cout << "Nombre de la orden a desea eliminar: ";
     cin >> aName;
     getline(cin, aName);
     cout << endl;
@@ -1065,7 +1082,7 @@ void CancelOrder(vector<pRestaurant> &restaurantP)
         if (restaurantP[i].reservationClient.compare(aName))
         {
             found = true;
-            cout << "\n¿Eliminar esta orden?";
+            cout << "¿Seguro de eliminar esta orden?";
             cout << "\n1. Si";
             cout << "\n2. No";
             cout << "\nSu opción: ";
@@ -1078,7 +1095,7 @@ void CancelOrder(vector<pRestaurant> &restaurantP)
                     if (iter->reservationClient.compare(aName))
                     {
                         iter = restaurantP.erase(iter);
-                        cout << "La orden ha sido eliminada\n";
+                        cout << "\n***La orden ha sido eliminada***";
                         break;
                     }
                 }
@@ -1101,7 +1118,12 @@ float CalculateTotalSalesD(vector<Delivery> aux1)
                    0.13));
     }
 
-    cout << "\nEl total de venta en domicilio es: $" << total << " doláres";
+    cout << "\n\t---------------------------" << endl;
+    cout << "\tTotal de venta en domicilio" << endl;
+    cout << "\t---------------------------" << endl;
+    cout << "-------------------------------------------------" << endl;
+    cout << "El total de venta a domicilio es: $" << fixed << setprecision(2) << total << " doláres" << endl;
+    cout << "-------------------------------------------------";
 }
 
 float CalculateTotalSalesR(vector<pRestaurant> aux2)
@@ -1118,5 +1140,10 @@ float CalculateTotalSalesR(vector<pRestaurant> aux2)
                    0.13));
     }
 
-    cout << "\nEl total de venta en el restaurante es: $" << total << " doláres";
+    cout << "\n\t--------------------------------" << endl;
+    cout << "\tTotal de venta en el restaurante" << endl;
+    cout << "\t--------------------------------" << endl;
+    cout << "------------------------------------------------------" << endl;
+    cout << "El total de venta en el restaurante es: $" << fixed << setprecision(2) << total << " doláres" << endl;
+    cout << "------------------------------------------------------";
 }

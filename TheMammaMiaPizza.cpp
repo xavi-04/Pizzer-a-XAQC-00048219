@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <iomanip>
 #include <vector>
 using namespace std;
 
@@ -1121,7 +1122,7 @@ float CalculateTotalSalesD(vector<Delivery> aux1)
     cout << "\tTotal de venta en domicilio" << endl;
     cout << "\t---------------------------" << endl;
     cout << "-------------------------------------------------" << endl;
-    cout << "El total de venta a domicilio es: $" << total << " doláres" << endl;
+    cout << "El total de venta a domicilio es: $" << fixed << setprecision(2) << total << " doláres" << endl;
     cout << "-------------------------------------------------";
 }
 
@@ -1143,6 +1144,6 @@ float CalculateTotalSalesR(vector<pRestaurant> aux2)
     cout << "\tTotal de venta en el restaurante" << endl;
     cout << "\t--------------------------------" << endl;
     cout << "------------------------------------------------------" << endl;
-    cout << "El total de venta en el restaurante es: $" << total << " doláres" << endl;
+    cout << "El total de venta en el restaurante es: $" << fixed << setprecision(2) << total << " doláres" << endl;
     cout << "------------------------------------------------------";
 }
