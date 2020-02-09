@@ -7,6 +7,9 @@ using namespace std;
 string password = "struct";
 int PerTable = 0;
 int ordersCount = 0;
+float pizza = 13.99, pasta = 5.55, lasagna = 6.25;
+float beer = 1.99, soda = 0.95, iceTea = 1.15;
+float pizzaRolls = 4.99, cheeseSticks = 3.75, garlicBread = 3.99;
 
 enum paymentType
 {
@@ -59,20 +62,19 @@ struct delivery
     Drinks drinksP;
     Starter starterP;
     paymentType pay;
-    vector<mainDish> dishT;
-    vector<drinks> drinksT;
-    vector<starter> starterT;
     float monto = 0, timeP;
 };
 typedef struct delivery Delivery;
 
-struct packOff{
+struct packOff
+{
     delivery takeOff;
     address takeOff2;
 };
 typedef struct packOff serve;
 
-struct packOffRestuarant{
+struct packOffRestuarant
+{
     restaurant takeOff3;
 };
 typedef struct packOffRestaurant serveRestaurant;
@@ -96,7 +98,8 @@ float recursiveSum(vector<Delivery>, int indice);
 float recursiveSum(vector<pRestaurant> restaurantP, int indice);
 void CancelOrder(vector<Delivery> &deliveryP);
 void CancelOrder(vector<pRestaurant> &restaurantP);
-float CalculateTotalSales(int pos);
+float CalculateTotalSalesD(vector<Delivery> aux1);
+float CalculateTotalSalesR(vector<pRestaurant> aux2);
 
 int main()
 {
@@ -140,6 +143,7 @@ int main()
 char EmployeMenu(char aux)
 {
     int option = 0;
+    int option2 = 0;
     bool continuar = true;
 
     do
@@ -192,7 +196,26 @@ char EmployeMenu(char aux)
             WaitTime(restaurantP);
             break;
         case 9:
-            //CalculateTotalSales();
+            cout << "\n¿Donde desea calcular el total de ventas de las ordenes despachadas?: ";
+            cout << "\n1. Domicilio";
+            cout << "\n2. Restaurante";
+            cout << "\nSu opción: ";
+            cin >> option2;
+
+            switch (option2)
+            {
+            case 1:
+                CalculateTotalSalesD(aux1);
+                break;
+
+            case 2:
+                CalculateTotalSalesR(aux2);
+                break;
+
+            default:
+                cout << "¡¡¡Opción inexistente!!!, intente de nuevo" << endl;
+                break;
+            }
             break;
         case 10:
             continuar = false;
@@ -269,7 +292,7 @@ char AdminMenu(char aux)
             cout << "\n2. Restaurante";
             cout << "\nSu opción: ";
             cin >> option2;
-            
+
             switch (option2)
             {
             case 1:
@@ -279,15 +302,34 @@ char AdminMenu(char aux)
             case 2:
                 CancelOrder(restaurantP);
                 break;
-            
+
             default:
                 cout << "¡¡¡Opción inexistente!!!, intente de nuevo" << endl;
                 break;
             }
-            
+
             break;
         case 10:
-            //CalculateTotalSales();
+            cout << "\n¿Donde desea calcular el total de ventas de las ordenes despachadas?: ";
+            cout << "\n1. Domicilio";
+            cout << "\n2. Restaurante";
+            cout << "\nSu opción: ";
+            cin >> option2;
+
+            switch (option2)
+            {
+            case 1:
+                CalculateTotalSalesD(aux1);
+                break;
+
+            case 2:
+                CalculateTotalSalesR(aux2);
+                break;
+
+            default:
+                cout << "¡¡¡Opción inexistente!!!, intente de nuevo" << endl;
+                break;
+            }
             break;
 
         case 11:
@@ -314,7 +356,6 @@ void DeliveryOrders()
     aux.orderNumber = ordersCount;
     bool continuar = true;
     int option = 0, option2 = 0, option3 = 0;
-    float pizza = 13.99, pasta = 5.55, lasagna = 6.25, beer = 1.99, soda = 0.95, iceTea = 1.15, pizzaRolls = 4.99, cheeseSticks = 3.75, garlicBread = 3.99;
 
     cout << "\n-----------------------" << endl;
     cout << "***Datos del cliente***" << endl;
@@ -528,8 +569,6 @@ void RestaurantOrders()
     bool continuar = true;
     int option = 0, option2 = 0, option3 = 0;
 
-    float pizza = 13.99, pasta = 5.55, lasagna = 6.25, beer = 1.99, soda = 0.95, iceTea = 1.15, pizzaRolls = 4.99, cheeseSticks = 3.75, garlicBread = 3.99;
-
     cout << "\n-------------------------------------" << endl;
     cout << "***Datos de la reserva del cliente***" << endl;
     cout << "-------------------------------------" << endl;
@@ -712,9 +751,9 @@ void RestaurantOrders()
         }
     } while (continuar);
 
-    aux.timeQ = ((aux.dishQ.pasta * 1.5 + aux.dishQ.pizza * 1.5 + aux.dishQ.lasagna * 1.5) + 
-    (aux.starterQ.cheeseSticks * 1.10 + aux.starterQ.garlicBread * 1.10 + aux.starterQ.pizzaRolls * 1.10) + 
-    (aux.drinksQ.beer * 1.35 + aux.drinksQ.soda * 1.35 + aux.drinksQ.iceTea * 1.35) );
+    aux.timeQ = ((aux.dishQ.pasta * 1.5 + aux.dishQ.pizza * 1.5 + aux.dishQ.lasagna * 1.5) +
+                 (aux.starterQ.cheeseSticks * 1.10 + aux.starterQ.garlicBread * 1.10 + aux.starterQ.pizzaRolls * 1.10) +
+                 (aux.drinksQ.beer * 1.35 + aux.drinksQ.soda * 1.35 + aux.drinksQ.iceTea * 1.35));
     cout << "\nEl tiempo de espera de la orden del cliente es: " << aux.timeQ << " minutos" << endl;
 
     restaurantP.push_back(aux);
@@ -724,7 +763,9 @@ void RestaurantOrders()
 void WatchDelivery(Delivery aux)
 {
     cout << endl;
-    cout << "-------------------------------";
+    cout << "\n-------------------------";
+    cout << "***Ordenes a domicilio***";
+    cout << "-------------------------";
     cout << "\n***Datos del cliente***";
     cout << "\nNúmero de orden: #" << aux.orderNumber;
     cout << "\nNombre del cliente: " << aux.FullName;
@@ -781,7 +822,7 @@ void WatchDelivery(Delivery aux)
         cout << "Tarjeta de crédito" << endl;
         break;
     }
-    cout << "-------------------------------";
+    cout << "*******************************";
 }
 
 void WatchDeliveryOrders()
@@ -795,7 +836,9 @@ void WatchDeliveryOrders()
 void WatchRestaurant(pRestaurant aux)
 {
     cout << endl;
-    cout << "\n-------------------------------";
+    cout << "\n----------------------";
+    cout << "Ordenes en restuarante";
+    cout << "----------------------";
     cout << "\n***Datos del cliente***";
     cout << "\nNúmero de orden: #" << aux.orderId;
     cout << "\nNombre del cliente: " << aux.reservationClient;
@@ -848,6 +891,7 @@ void WatchRestaurant(pRestaurant aux)
         cout << "Tarjeta de crédito" << endl;
         break;
     }
+    cout << "*******************************";
 }
 
 void WatchRestaurantOrders()
@@ -860,8 +904,11 @@ void WatchRestaurantOrders()
 
 void ServeDeliveryOrders()
 {
-
     string orderName;
+
+    cout << "\n-------------------------------------" << endl;
+    cout << "***Despacho de ordenes a domicilio***" << endl;
+    cout << "-------------------------------------" << endl;
     cout << "\nIngrese el nombre de la orden a despachar: ";
     cin >> orderName;
     getline(cin, orderName);
@@ -871,9 +918,9 @@ void ServeDeliveryOrders()
         if (iter->FullName.compare(orderName))
         {
             aux1.push_back(deliveryP.at(i));
-            iter  = deliveryP.erase(iter);
+            iter = deliveryP.erase(iter);
             cout << "La orden ha sido despachada\n";
-            break;
+            
         }
 
         cout << "Pedidos actuales: ";
@@ -883,6 +930,7 @@ void ServeDeliveryOrders()
         }
         cout << endl;
         i++;
+        break;
     }
     cout << endl;
 }
@@ -891,6 +939,9 @@ void ServeRestaurantsOrders()
 {
     string orderName;
 
+    cout << "\n----------------------------------------" << endl;
+    cout << "\n***Despacho de ordenes en restaurante***" << endl;
+    cout << "\n----------------------------------------" << endl;
     cout << "Ingrese el nombre de la orden a despachar: ";
     cin >> orderName;
     getline(cin, orderName);
@@ -899,10 +950,10 @@ void ServeRestaurantsOrders()
     {
         if (iter->reservationClient.compare(orderName))
         {
-            aux2.push_back(restaurantP.at(i)); 
+            aux2.push_back(restaurantP.at(i));
             iter = restaurantP.erase(iter);
             cout << "La orden ha sido despachada.\n";
-            break;
+            
         }
 
         cout << "Pedidos actuales: ";
@@ -939,7 +990,7 @@ float recursiveSum(vector<Delivery> deliveryP, int indice)
     }
 }
 
-void WaitTime(vector<pRestaurant> restaurantP) //sobrecarga
+void WaitTime(vector<pRestaurant> restaurantP)
 {
     float sum = recursiveSum(restaurantP, 0);
 
@@ -968,88 +1019,104 @@ void CancelOrder(vector<Delivery> &deliveryP)
     int confirm;
     bool found = true;
 
-        cout << "Ingrese el nombre de la orden que desea eliminar: ";
-        cin >> aName;
-        getline(cin, aName);
-        cout << endl;
-        for (int i = 0; i < deliveryP.size(); i++)
+    cout << "Ingrese el nombre de la orden que desea eliminar: ";
+    cin >> aName;
+    getline(cin, aName);
+    cout << endl;
+    for (int i = 0; i < deliveryP.size(); i++)
+    {
+        if (deliveryP[i].FullName.compare(aName))
         {
-            if (deliveryP[i].FullName.compare(aName))
+            found = true;
+            cout << "\n¿Eliminar esta orden?";
+            cout << "\n1. Si";
+            cout << "\n2. No";
+            cout << "\nSu opción: ";
+            cin >> confirm;
+            cin.ignore();
+            if (confirm == 1)
             {
-                found = true;
-                cout << "\n¿Eliminar esta orden?";
-                cout << "\n1. Si";
-                cout << "\n2. No";
-                cout << "\nSu opción: ";
-                cin >> confirm;
-                cin.ignore();
-                if (confirm == 1)
+                for (auto iter = deliveryP.begin(); iter != deliveryP.end(); ++iter)
                 {
-                    for (auto iter = deliveryP.begin(); iter != deliveryP.end(); ++iter)
+                    if (iter->FullName.compare(aName))
                     {
-                        if (iter->FullName.compare(aName))
-                        {
-                            iter = deliveryP.erase(iter);
-                            cout << "La orden ha sido eliminada\n";
-                            break;
-                        }
+                        iter = deliveryP.erase(iter);
+                        cout << "La orden ha sido eliminada\n";
+                        break;
                     }
                 }
-                else{}
             }
         }
-        if (found == false)
-        {
-            cout << "No se encontro la orden\n";
-            return;
-        }
+    }
 }
 
-void CancelOrder(vector<pRestaurant> &restaurantP){
+void CancelOrder(vector<pRestaurant> &restaurantP)
+{
     string aName;
     int confirm;
     bool found = true;
 
-        cout << "Ingrese el nombre de la orden que desea eliminar: ";
-        cin >> aName;
-        getline(cin, aName);
-        cout << endl;
-        for (int i = 0; i < restaurantP.size(); i++)
+    cout << "Ingrese el nombre de la orden que desea eliminar: ";
+    cin >> aName;
+    getline(cin, aName);
+    cout << endl;
+    for (int i = 0; i < restaurantP.size(); i++)
+    {
+        if (restaurantP[i].reservationClient.compare(aName))
         {
-            if (restaurantP[i].reservationClient.compare(aName))
+            found = true;
+            cout << "\n¿Eliminar esta orden?";
+            cout << "\n1. Si";
+            cout << "\n2. No";
+            cout << "\nSu opción: ";
+            cin >> confirm;
+            cin.ignore();
+            if (confirm == 1)
             {
-                found = true;
-                cout << "\n¿Eliminar esta orden?";
-                cout << "\n1. Si";
-                cout << "\n2. No";
-                cout << "\nSu opción: ";
-                cin >> confirm;
-                cin.ignore();
-                if (confirm == 1)
+                for (auto iter = restaurantP.begin(); iter != restaurantP.end(); ++iter)
                 {
-                    for (auto iter = restaurantP.begin(); iter != restaurantP.end(); ++iter)
+                    if (iter->reservationClient.compare(aName))
                     {
-                        if (iter->reservationClient.compare(aName))
-                        {
-                            iter = restaurantP.erase(iter);
-                            cout << "La orden ha sido eliminada\n";
-                            break;
-                        }
+                        iter = restaurantP.erase(iter);
+                        cout << "La orden ha sido eliminada\n";
+                        break;
                     }
                 }
-                else{}
             }
         }
-        if (found == false)
-        {
-            cout << "No se encontro la orden\n";
-            return;
-        }
-};
+    }
+}
 
-//void CancelOrder(vector<Delivery> deliveryP)
-float CalculateTotalSales()
+float CalculateTotalSalesD(vector<Delivery> aux1)
 {
-    
+    float total = 0;
+    for (int i = 0; i < aux1.size(); i++)
+    {
+        total += ((aux1[i].dishP.pizza * 13.99 + aux1[i].dishP.pasta * 5.55 + aux1[i].dishP.lasagna * 6.25 +
+                   aux1[i].starterP.cheeseSticks * 3.75 + aux1[i].starterP.garlicBread * 3.99 + aux1[i].starterP.pizzaRolls * 4.99 +
+                   aux1[i].drinksP.beer * 1.99 + aux1[i].drinksP.soda * 0.95 + aux1[i].drinksP.iceTea * 1.15) +
+                  ((aux1[i].dishP.pizza * 13.99 + aux1[i].dishP.pasta * 5.55 + aux1[i].dishP.lasagna * 6.25 +
+                    aux1[i].starterP.cheeseSticks * 3.75 + aux1[i].starterP.garlicBread * 3.99 + aux1[i].starterP.pizzaRolls * 4.99 +
+                    aux1[i].drinksP.beer * 1.99 + aux1[i].drinksP.soda * 0.95 + aux1[i].drinksP.iceTea * 1.15) *
+                   0.13));
+    }
 
+    cout << "\nEl total de venta en domicilio es: $" << total << " doláres";
+}
+
+float CalculateTotalSalesR(vector<pRestaurant> aux2)
+{
+    float total = 0;
+    for (int i = 0; i < aux2.size(); i++)
+    {
+        total += ((aux2[i].dishQ.pizza * 13.99 + aux2[i].dishQ.pasta * 5.55 + aux2[i].dishQ.lasagna * 6.25 +
+                   aux2[i].starterQ.cheeseSticks * 3.75 + aux2[i].starterQ.garlicBread * 3.99 + aux2[i].starterQ.pizzaRolls * 4.99 +
+                   aux2[i].drinksQ.beer * 1.99 + aux2[i].drinksQ.soda * 0.95 + aux2[i].drinksQ.iceTea * 1.15) +
+                  ((aux2[i].dishQ.pizza * 13.99 + aux2[i].dishQ.pasta * 5.55 + aux2[i].dishQ.lasagna * 6.25 +
+                    aux2[i].starterQ.cheeseSticks * 3.75 + aux2[i].starterQ.garlicBread * 3.99 + aux2[i].starterQ.pizzaRolls * 4.99 +
+                    aux2[i].drinksQ.beer * 1.99 + aux2[i].drinksQ.soda * 0.95 + aux2[i].drinksQ.iceTea * 1.15) *
+                   0.13));
+    }
+
+    cout << "\nEl total de venta en el restaurante es: $" << total << " doláres";
 }
