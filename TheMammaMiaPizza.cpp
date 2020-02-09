@@ -7,6 +7,9 @@ using namespace std;
 string password = "struct";
 int PerTable = 0;
 int ordersCount = 0;
+float pizza = 13.99, pasta = 5.55, lasagna = 6.25;
+float beer = 1.99, soda = 0.95, iceTea = 1.15;
+float pizzaRolls = 4.99, cheeseSticks = 3.75, garlicBread = 3.99;
 
 enum paymentType
 {
@@ -96,7 +99,7 @@ float recursiveSum(vector<Delivery>, int indice);
 float recursiveSum(vector<pRestaurant> restaurantP, int indice);
 void CancelOrder(vector<Delivery> &deliveryP);
 void CancelOrder(vector<pRestaurant> &restaurantP);
-float CalculateTotalSales(int pos);
+float CalculateTotalSalesD(vector<Delivery> aux1);
 
 int main()
 {
@@ -192,7 +195,7 @@ char EmployeMenu(char aux)
             WaitTime(restaurantP);
             break;
         case 9:
-            //CalculateTotalSales();
+            CalculateTotalSalesD(aux1);
             break;
         case 10:
             continuar = false;
@@ -287,7 +290,7 @@ char AdminMenu(char aux)
             
             break;
         case 10:
-            //CalculateTotalSales();
+            CalculateTotalSalesD(aux1);
             break;
 
         case 11:
@@ -314,7 +317,6 @@ void DeliveryOrders()
     aux.orderNumber = ordersCount;
     bool continuar = true;
     int option = 0, option2 = 0, option3 = 0;
-    float pizza = 13.99, pasta = 5.55, lasagna = 6.25, beer = 1.99, soda = 0.95, iceTea = 1.15, pizzaRolls = 4.99, cheeseSticks = 3.75, garlicBread = 3.99;
 
     cout << "\n-----------------------" << endl;
     cout << "***Datos del cliente***" << endl;
@@ -527,8 +529,6 @@ void RestaurantOrders()
 
     bool continuar = true;
     int option = 0, option2 = 0, option3 = 0;
-
-    float pizza = 13.99, pasta = 5.55, lasagna = 6.25, beer = 1.99, soda = 0.95, iceTea = 1.15, pizzaRolls = 4.99, cheeseSticks = 3.75, garlicBread = 3.99;
 
     cout << "\n-------------------------------------" << endl;
     cout << "***Datos de la reserva del cliente***" << endl;
@@ -1047,9 +1047,19 @@ void CancelOrder(vector<pRestaurant> &restaurantP){
         }
 };
 
-//void CancelOrder(vector<Delivery> deliveryP)
-float CalculateTotalSales()
-{
-    
 
+float CalculateTotalSalesD(vector<Delivery> aux1)
+{
+    float total = 0;
+    for(int i = 0; i < aux1.size(); i++){
+    total += ((aux1[i].dishP.pizza * 13.99 + aux1[i].dishP.pasta * 5.55 + aux1[i].dishP.lasagna * 6.25 + 
+    aux1[i].starterP.cheeseSticks * 3.75 + aux1[i].starterP.garlicBread * 3.99 + aux1[i].starterP.pizzaRolls * 4.99 + 
+    aux1[i].drinksP.beer * 1.99 + aux1[i].drinksP.soda * 0.95 + aux1[i].drinksP.iceTea * 1.15) + 
+    ((aux1[i].dishP.pizza * 13.99 + aux1[i].dishP.pasta * 5.55 + aux1[i].dishP.lasagna * 6.25 + 
+    aux1[i].starterP.cheeseSticks * 3.75 + aux1[i].starterP.garlicBread * 3.99 + aux1[i].starterP.pizzaRolls * 4.99 + 
+    aux1[i].drinksP.beer * 1.99 + aux1[i].drinksP.soda * 0.95 + aux1[i].drinksP.iceTea * 1.15) * 0.13) );
+    }
+
+    cout << "\nEl total de venta en domicilio es: $" << total << " doláres";
 }
+
