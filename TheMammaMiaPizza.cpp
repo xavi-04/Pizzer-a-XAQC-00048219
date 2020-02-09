@@ -97,6 +97,7 @@ float recursiveSum(vector<pRestaurant> restaurantP, int indice);
 void CancelOrder(vector<Delivery> &deliveryP);
 void CancelOrder(vector<pRestaurant> &restaurantP);
 float CalculateTotalSalesD(vector<Delivery> aux1);
+float CalculateTotalSalesR(vector<pRestaurant> aux2);
 
 int main()
 {
@@ -140,6 +141,7 @@ int main()
 char EmployeMenu(char aux)
 {
     int option = 0;
+    int option2 = 0;
     bool continuar = true;
 
     do
@@ -192,7 +194,26 @@ char EmployeMenu(char aux)
             WaitTime(restaurantP);
             break;
         case 9:
-            CalculateTotalSalesD(aux1);
+            cout << "\n¿Donde desea calcular el total de ventas de las ordenes despachadas?: ";
+            cout << "\n1. Domicilio";
+            cout << "\n2. Restaurante";
+            cout << "\nSu opción: ";
+            cin >> option2;
+            
+            switch (option2)
+            {
+            case 1:
+                CalculateTotalSalesD(aux1);
+                break;
+
+            case 2:
+                CalculateTotalSalesR(aux2);
+                break;
+            
+            default:
+                cout << "¡¡¡Opción inexistente!!!, intente de nuevo" << endl;
+                break;
+            }
             break;
         case 10:
             continuar = false;
@@ -287,7 +308,26 @@ char AdminMenu(char aux)
             
             break;
         case 10:
-            CalculateTotalSalesD(aux1);
+            cout << "\n¿Donde desea calcular el total de ventas de las ordenes despachadas?: ";
+            cout << "\n1. Domicilio";
+            cout << "\n2. Restaurante";
+            cout << "\nSu opción: ";
+            cin >> option2;
+            
+            switch (option2)
+            {
+            case 1:
+                CalculateTotalSalesD(aux1);
+                break;
+
+            case 2:
+                CalculateTotalSalesR(aux2);
+                break;
+            
+            default:
+                cout << "¡¡¡Opción inexistente!!!, intente de nuevo" << endl;
+                break;
+            }
             break;
 
         case 11:
@@ -936,7 +976,7 @@ float recursiveSum(vector<Delivery> deliveryP, int indice)
     }
 }
 
-void WaitTime(vector<pRestaurant> restaurantP) //sobrecarga
+void WaitTime(vector<pRestaurant> restaurantP)
 {
     float sum = recursiveSum(restaurantP, 0);
 
